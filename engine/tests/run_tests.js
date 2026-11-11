@@ -26,7 +26,7 @@ for (let idx = 0; idx < 3; idx++) {
       eq(res.parsed.vendor, vendor === 'ancestry' ? 'AncestryDNA' : '23andMe', 'vendor');
       lib.markers.forEach(m => {
         const r = byId(res, m.id), k = keysOf(m)[idx];
-        if (vendor === '23andme' && 'DI'.includes(m.alleles.normal)) { eq(r.coverage, 'not_read', m.id + ' D/I not read on 23andMe'); return; }
+        if (vendor === '23andme' && 'DI'.includes(m.alleles.normal)) return;   // D/I on 23andMe: dedicated tests below
         eq(r.coverage, 'ok', m.id + ' coverage'); eq(r.status, m.genotypes[k].status, m.id + ' status'); eq(r.text, m.genotypes[k].text, m.id + ' text');
       });
     });
@@ -57,7 +57,7 @@ t('unrecognized', () => {
 // 4. No-calls
 t('no-calls', () => {
   const a = run(ancestry(lib.markers.map(m => [m.rsid, '0', '0']))), b = run(ttm(lib.markers.map(m => [m.rsid, '--'])));
-  lib.markers.forEach(m => { eq(byId(a, m.id).coverage, 'no_call', m.id); eq(byId(b, m.id).coverage, 'DI'.includes(m.alleles.normal) ? 'not_read' : 'no_call', m.id); });
+  lib.markers.forEach(m => { eq(byId(a, m.id).coverage, 'no_call', m.id); eq(byId(b, m.id).coverage, 'DI'.includes(m.alleles.normal) && !lib.indel23andMe[m.rsid].ids.includes(m.rsid) ? 'not_read' : 'no_call', m.id); });
 });
 // 5. Single-letter (male X) genotypes
 t('hemizygous', () => {
@@ -299,34 +299,76 @@ t('23andMe: combined readings use position-matched markers', () => {
     { revealCategories: ['carrier'] }), 'HBB_COMBINED');
   if (r.text.indexOf('hemoglobin SC disease') < 0) throw new Error('combined reading did not use the position-matched marker');
 });
-// Insertion/deletion letters: read only from AncestryDNA files (issue #1: a normal 23andMe BRCA1 call was read as two copies).
+// Insertion/deletion (D/I) letters. AncestryDNA: library letters. 23andMe: only the exact probe IDs in lib.indel23andMe,
+// with D and I swapped where "swap" is set (issue #1: BRCA1 185delAG uses opposite letters on 23andMe). Other files: not read.
 const indels = lib.markers.filter(m => 'DI'.includes(m.alleles.normal));
 const sensAll = lib.categories.filter(c => c.sensitive).map(c => c.id);
-t('D/I markers are never read from 23andMe or other non-AncestryDNA files, whatever the letters', () => {
-  if (indels.length < 7) throw new Error('expected at least 7 D/I markers, found ' + indels.length);
-  const four = rows => 'rsid,chromosome,position,result\n' + rows.map((r, i) => [r[0], 1, 1000 + i, r[1]].join(',')).join('\n') + '\n';
-  ['II', 'DI', 'ID', 'DD', 'I', 'D'].forEach(g => [['23andMe', ttm], ['4-column', four]].forEach(([name, make]) => {
-    const res = run(make(indels.map(m => [m.rsid, g])), { revealCategories: sensAll });
-    indels.forEach(m => {
-      const r = byId(res, m.id);
-      eq(r.coverage, 'not_read', name + ' ' + m.id + ' ' + g); if (r.status !== undefined) throw new Error(m.id + ' got a status');
-    });
-    res.report.doctorBrief.forEach(b => { if (indels.some(m => m.id === b.id)) throw new Error(name + ' ' + g + ': ' + b.id + ' in doctor list'); });
-    indels.forEach(m => { if (!res.report.coverage.notRead.includes(m.name)) throw new Error(name + ' ' + g + ': ' + m.id + ' missing from notRead list'); });
+const SW = { D: 'I', I: 'D' };
+const to23 = (rsid, g) => lib.indel23andMe[rsid].swap ? g.split('').map(x => SW[x]).join('') : g;   // library letters -> 23andMe letters
+t('every D/I marker has a verified 23andMe probe entry', () => {
+  eq(indels.length, 7, 'D/I markers');
+  indels.forEach(m => { const e = lib.indel23andMe[m.rsid]; if (!e || !e.ids.length) throw new Error(m.id + ' has no 23andMe probe'); eq(e.rareTwoCopy, true, m.id + ' is rare'); });
+  eq(lib.indel23andMe.rs80357914.swap, true, '185delAG letters are reversed on 23andMe');
+  ['rs8176719', 'rs71785313'].forEach(r => { eq(lib.indel23andMe[r].swap, false, r); eq(lib.indel23andMe[r].rareTwoCopy, false, r); });
+});
+t('23andMe D/I markers: usual result, one copy, and two copies withheld, for every listed probe', () => {
+  indels.forEach(m => lib.indel23andMe[m.rsid].ids.forEach(id => {
+    const n = m.alleles.normal, v = m.alleles.variant, one = r => byId(run(ttm([[id, to23(m.rsid, r)]]), { revealCategories: sensAll }), m.id);
+    const a = one(n + n), b = one(n + v), c = one(v + v);
+    eq(a.coverage, 'ok', m.id + ' ' + id); eq(a.status, 'normal', m.id + ' ' + id + ' usual');
+    eq(b.status, m.genotypes[keysOf(m)[1]].status, m.id + ' ' + id + ' one copy'); eq(b.text, m.genotypes[keysOf(m)[1]].text);
+    if (a.caveat.indexOf('Read from 23andMe marker ' + id) < 0) throw new Error('source probe not named: ' + id);
+    eq(c.coverage, 'withheld', m.id + ' ' + id + ' two copies'); if (c.status !== undefined) throw new Error(m.id + ' two-copy got a status');
+    const rep = run(ttm([[id, to23(m.rsid, v + v)]]), { revealCategories: sensAll }).report;
+    eq(rep.doctorBrief.length, 0, m.id + ' two copies not in doctor list'); eq(rep.coverage.withheld[0], m.name);
   }));
 });
-t('23andMe BRCA1 185delAG II never gives a pathogenic result (issue #1 regression)', () => {
-  const res = run(ttm([['rs80357914', 'II']]), { revealCategories: sensAll });
-  eq(byId(res, 'BRCA1_185DELAG').coverage, 'not_read'); eq(res.report.doctorBrief.length, 0, 'doctor list');
-});
-t('combined readings ignore D/I positions on 23andMe files', () => {
-  ['II', 'DI', 'DD'].forEach(g => {
-    const rows = []; lib.composites.forEach(c => c.rsids.forEach(rs => { if (c.alleleSets[rs].some(x => 'DI'.includes(x))) rows.push([rs, g]); }));
-    const res = run(ttm(rows), { revealCategories: sensAll });
-    lib.composites.filter(c => c.rsids.some(rs => c.alleleSets[rs].some(x => 'DI'.includes(x)))).forEach(c => eq(byId(res, c.id).coverage, 'not_read', c.id + ' ' + g));
+t('issue #1 regression: a usual 23andMe BRCA1 185delAG call (II) reads as no variant', () => {
+  ['i4000377', 'rs386833395', 'rs80357914'].forEach(id => {
+    const res = run(ttm([[id, 'II']]), { revealCategories: sensAll });
+    eq(byId(res, 'BRCA1_185DELAG').status, 'normal', id); eq(res.report.doctorBrief.length, 0, id + ' doctor list');
   });
-  const f = mk('CFTR_G542X'), cf = byId(run(ttm([['rs113993960', 'DD'], [f.rsid, f.alleles.normal + f.alleles.variant]]), { revealCategories: sensAll }), 'CF_COMBINED');
-  eq(cf.coverage, 'ok', 'CF still reads the single-letter variants'); if (cf.genotype.split(' / ')[0] !== '?') throw new Error('F508del position was used: ' + cf.genotype);
+  eq(byId(run(ttm([['i4000377', 'DI']]), { revealCategories: sensAll }), 'BRCA1_185DELAG').status, 'notable', 'one copy');
+  eq(byId(run(ancestry([['rs80357914', 'D', 'D']])), 'BRCA1_185DELAG').status, 'normal', 'AncestryDNA DD is still the usual result');
+});
+t('23andMe D/I safety: disagreeing probes, unlisted probes and other files are not read', () => {
+  eq(byId(run(ttm([['i4000377', 'II'], ['rs80357914', 'DI']])), 'BRCA1_185DELAG').coverage, 'not_read', 'probes disagree');
+  eq(byId(run(ttm([['i4000377', 'II'], ['rs80357914', '--']])), 'BRCA1_185DELAG').status, 'normal', 'a no-call probe is ignored');
+  eq(byId(run(ttm([['i4000377', '--']])), 'BRCA1_185DELAG').coverage, 'no_call');
+  eq(byId(run(ttm([['i5009684', 'DD']])), 'BRCA1_185DELAG').coverage, 'not_on_file', 'a probe at the same position that is not listed is ignored');
+  eq(byId(run(ttm([['rs113993960', 'II']])), 'CFTR_F508DEL').coverage, 'not_read', 'library rsID present but not a verified 23andMe probe');
+  const four = rows => 'rsid,chromosome,position,result\n' + rows.map((r, i) => [r[0], 1, 1000 + i, r[1]].join(',')).join('\n') + '\n';
+  ['II', 'DI', 'DD'].forEach(g => {
+    const ids = []; indels.forEach(m => ids.push(m.rsid, ...lib.indel23andMe[m.rsid].ids));
+    const res = run(four([...new Set(ids)].map(id => [id, g])), { revealCategories: sensAll });
+    indels.forEach(m => eq(byId(res, m.id).coverage, 'not_read', '4-column ' + m.id + ' ' + g));
+    eq(res.report.doctorBrief.filter(b => indels.some(m => m.id === b.id)).length, 0, '4-column doctor list');
+  });
+});
+t('23andMe combined readings: CF, Tay-Sachs, ABO and APOL1', () => {
+  const g = mk('CFTR_G542X'), het = g.alleles.normal + g.alleles.variant, R = { revealCategories: sensAll };
+  eq(byId(run(ttm([['i3000001', 'DI'], [g.rsid, het]]), R), 'CF_COMBINED').status, 'notable', 'F508del + G542X');
+  eq(byId(run(ttm([['i3000001', 'DI']]), R), 'CF_COMBINED').status, 'info', 'F508del carrier');
+  const two = byId(run(ttm([['i3000001', 'DD'], [g.rsid, g.alleles.normal + g.alleles.normal]]), R), 'CF_COMBINED');
+  if (two.genotype.split(' / ')[0] !== '?') throw new Error('two-copy F508del should be treated as missing: ' + two.genotype);
+  eq(byId(run(ttm([['i4000391', 'DI'], ['rs121907954', 'CT']]), R), 'TAYSACHS_COMBINED').status, 'notable', 'Tay-Sachs compound');
+  const abo = (o, b) => byId(run(ttm([['rs8176719', o], ['rs8176746', b]])), 'ABO').text;
+  if (abo('DD', 'GG').indexOf('type O') < 0) throw new Error('23andMe DD = O');
+  if (abo('II', 'GT').indexOf('type AB') < 0) throw new Error('23andMe II + one B = AB');
+  if (abo('DI', 'GT').indexOf('type B') < 0) throw new Error('23andMe DI + one B = B/O');
+  const apol = (g1, g2) => byId(run(ttm([['rs73885319', g1], ['rs71785313', g2]])), 'APOL1');
+  eq(apol('AA', 'II').status, 'normal'); eq(apol('AA', 'DI').status, 'common_variant'); eq(apol('AA', 'DD').status, 'notable', 'two G2 copies are reported');
+});
+t('older 23andMe files (genome build 36): no position matching and no ClinVar scan', () => {
+  const H36 = '# This data file generated by 23andMe at: Mon Feb 14 2011\n# We are using reference human assembly build 36 (also known as Annotation Release 36.3).\n# rsid\tchromosome\tposition\tgenotype\n';
+  const m = mk('F2_G20210A'), v = lib.clinvarScan.variants[0];
+  const res = run(H36 + row23('i3002432', 'F2_G20210A', m.alleles.normal + m.alleles.variant) + [v.rs, v.chr, v.pos, v.ref + v.alt].join('\t') + '\n');
+  eq(res.parsed.build36, true, 'build 36 detected');
+  eq(byId(res, 'F2_G20210A').coverage, 'not_on_file', 'no position matching on build 36');
+  eq(res.scored.filter(r => r.kind === 'scan').length, 0, 'no ClinVar scan on build 36');
+  eq(byId(run(ttm([['i4000377', 'II']])), 'BRCA1_185DELAG').status, 'normal', 'exact-ID D/I probes still read');
+  const b37 = run(H23 + row23('i3002432', 'F2_G20210A', m.alleles.normal + m.alleles.variant));
+  eq(b37.parsed.build36, false); eq(byId(b37, 'F2_G20210A').coverage, 'ok', 'build 37 still uses position matching');
 });
 t('AncestryDNA still reads every D/I marker and combined reading', () => {
   [0, 1, 2].forEach(i => {

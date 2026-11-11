@@ -12,8 +12,8 @@ using System.Windows.Forms;
 [assembly: AssemblyProduct("DNA Decrypt")]
 [assembly: AssemblyCompany("DNA Decrypt")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 DNA Decrypt")]
-[assembly: AssemblyVersion("0.1.4.0")]
-[assembly: AssemblyFileVersion("0.1.4.0")]
+[assembly: AssemblyVersion("0.1.5.0")]
+[assembly: AssemblyFileVersion("0.1.5.0")]
 
 static class Launcher
 {

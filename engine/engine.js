@@ -14,6 +14,7 @@
     var s = new Set();
     lib.markers.forEach(function (m) { s.add(m.rsid); });
     lib.composites.forEach(function (c) { c.rsids.forEach(function (r) { s.add(r); }); });
+    Object.keys(lib.indel23andMe || {}).forEach(function (r) { lib.indel23andMe[r].ids.forEach(function (id) { s.add(id); }); });
     if (lib.clinvarScan) lib.clinvarScan.variants.forEach(function (v) { s.add(v.rs); });
     return s;
   }
@@ -88,7 +89,10 @@
       : (head.indexOf('23andme') >= 0 ? '23andMe' : (format === 'four_column' ? 'Compatible 4-column file' : 'Unknown'));
     /* 23andMe only: a marker missing by rsID is taken from a row at the exact same position, but only if every letter
        is one of the marker's two expected letters (no strand flipping) and all such rows agree. */
-    if (vendor === '23andMe') Object.keys(cands).forEach(function (rsid) {
+    /* Older 23andMe files (2008-2011) use genome build 36 positions. Position matching and the ClinVar scan need
+       build 37 (GRCh37) positions, so both are skipped for those files. Markers read by rsID or exact ID are unaffected. */
+    var build36 = /build 36(?!\d)/.test(head);
+    if (vendor === '23andMe' && !build36) Object.keys(cands).forEach(function (rsid) {
       if (genotypes[rsid]) return;
       var list = cands[rsid], byKey = Object.create(null);
       list.forEach(function (x) {
@@ -98,7 +102,7 @@
       if (ks.length === 1) { byKey[ks[0]].byPosition = true; genotypes[rsid] = byKey[ks[0]]; }
       else if (!ks.length && list.every(function (x) { return x.g.noCall; })) genotypes[rsid] = { noCall: true };
     });
-    return { format: format, vendor: vendor, rowsRead: rows, genotypes: genotypes, header: header.slice(0, 12) };
+    return { format: format, vendor: vendor, rowsRead: rows, genotypes: genotypes, header: header.slice(0, 12), build36: build36 };
   }
 
   /* ---------- scoring ---------- */
@@ -114,23 +118,51 @@
   }
   function isPal(allowed) { var s = allowed.slice().sort().join(''); return s === 'AT' || s === 'CG'; }
 
-  /* Insertion/deletion (D/I) letters are read only from AncestryDNA files, whose D/I meaning the library follows.
-     Other companies do not document theirs (23andMe's is reported to be reversed for at least BRCA1 185delAG), so on
-     any other file these positions are never read: single markers report 'not_read', combined readings treat the
-     position as missing. */
+  /* Insertion/deletion (D/I) letters. The library uses AncestryDNA's letters. 23andMe files are read only through the
+     exact probe IDs in lib.indel23andMe (never by position, since other 23andMe probes at the same positions use
+     opposite letters), with D and I swapped where 23andMe's letters are the reverse. Every listed probe present in the
+     file must agree. On any other file, or for a probe not listed, these positions are not read. */
   function isIndel(letters) { return letters.indexOf('D') >= 0 || letters.indexOf('I') >= 0; }
-  function readsIndels(parsed) { return parsed.vendor === 'AncestryDNA'; }
+  var SWAP = { D: 'I', I: 'D' };
+  /* Returns { g } (a genotype in library letters), { none: true } (not in the file) or { skip: true } (not read). */
+  function indelCall(parsed, rsid) {
+    if (parsed.vendor === 'AncestryDNA') return parsed.genotypes[rsid] ? { g: parsed.genotypes[rsid] } : { none: true };
+    var map = parsed.vendor === '23andMe' && parsed.indel23 ? parsed.indel23[rsid] : null;
+    if (!map) return parsed.genotypes[rsid] ? { skip: true } : { none: true };
+    var rows = map.ids.filter(function (id) { return parsed.genotypes[id]; });
+    if (!rows.length) return parsed.genotypes[rsid] ? { skip: true } : { none: true };
+    var calls = rows.filter(function (id) { return !parsed.genotypes[id].noCall; });
+    if (!calls.length) return { g: { noCall: true } };
+    var keys = {}, first = null;
+    calls.forEach(function (id) {
+      var a = parsed.genotypes[id].alleles.map(function (x) { return map.swap ? SWAP[x] || x : x; });
+      if (a.some(function (x) { return x !== 'D' && x !== 'I'; })) { keys['bad'] = 1; return; }
+      keys[sortedKey(a)] = 1;
+      if (!first) first = { alleles: a, sourceId: id };
+    });
+    if (keys.bad || Object.keys(keys).length !== 1) return { skip: true };
+    return { g: first, rareTwoCopy: !!map.rareTwoCopy };
+  }
   function join(a, b) { return a ? (b ? a + ' ' + b : a) : (b || ''); }
+  var WITHHELD = 'Two copies of a rare variant were reported here, which is far more likely to be a chip error than a real result, so it is not shown. A clinical test can check this marker.';
   function scoreMarker(m, parsed) {
     var base = { id: m.id, kind: 'marker', category: m.category, name: m.name, gene: m.gene, rsid: m.rsid,
       caveat: m.caveat, about: m.about, verifyLevel: m.verify.level, tier: m.tier };
-    var g = parsed.genotypes[m.rsid];
+    var g = parsed.genotypes[m.rsid], indel = isIndel([m.alleles.normal, m.alleles.variant]), x = null;
+    if (indel) {
+      x = indelCall(parsed, m.rsid);
+      if (x.none) return Object.assign(base, { coverage: 'not_on_file' });
+      if (x.skip) return Object.assign(base, { coverage: 'not_read' });
+      g = x.g;
+    }
     if (!g) return Object.assign(base, { coverage: 'not_on_file' });
-    if (!readsIndels(parsed) && isIndel([m.alleles.normal, m.alleles.variant])) return Object.assign(base, { coverage: 'not_read' });
     if (g.noCall) return Object.assign(base, { coverage: 'no_call' });
     var r = resolve(g.alleles, [m.alleles.normal, m.alleles.variant], m.palindromic);
     if (!r) return Object.assign(base, { coverage: 'unrecognized', genotype: g.alleles.join('') });
     var e = m.genotypes[r.key];
+    if (x && x.rareTwoCopy && r.key === m.alleles.variant + m.alleles.variant)
+      return Object.assign(base, { coverage: 'withheld', genotype: g.alleles.join(''), caveat: WITHHELD });
+    if (g.sourceId && !g.byPosition) base.caveat = join(base.caveat, 'Read from 23andMe marker ' + g.sourceId + '.');
     if (g.byPosition) base.caveat = join(base.caveat, 'Read from 23andMe marker ' + g.sourceId + ' at the same DNA position.');
     return Object.assign(base, { coverage: 'ok', genotype: g.alleles.join(''), flipped: r.flipped, byPosition: !!g.byPosition,
       hemizygous: !!g.hemizygous, status: e.status, text: e.text });
@@ -141,11 +173,18 @@
       rsid: c.rsids.join('+'), caveat: c.caveat, about: c.about, verifyLevel: c.verify.level, tier: c.tier };
     var keys = [], any = false, noCall = false, bad = false, skipped = false;
     c.rsids.forEach(function (rs) {
-      var g = parsed.genotypes[rs];
-      if (g && !readsIndels(parsed) && isIndel(c.alleleSets[rs])) { skipped = true; keys.push(null); return; }
+      var g = parsed.genotypes[rs], al = c.alleleSets[rs];
+      if (isIndel(al)) {
+        var x = indelCall(parsed, rs);
+        if (x.none) { keys.push(null); return; }
+        if (x.skip) { skipped = true; keys.push(null); return; }
+        g = x.g;
+        /* a rare two-copy call is treated as missing, as for single markers */
+        if (x.rareTwoCopy && !g.noCall && g.alleles[0] === g.alleles[1] && g.alleles[0] === al[1]) { skipped = true; keys.push(null); return; }
+      }
       if (!g) { keys.push(null); return; }
       if (g.noCall) { keys.push(null); noCall = true; return; }
-      var al = c.alleleSets[rs], r = resolve(g.alleles, al, isPal(al));
+      var r = resolve(g.alleles, al, isPal(al));
       if (!r) { bad = true; keys.push(null); return; }
       keys.push(r.key); any = true;
     });
@@ -176,7 +215,7 @@
   var SCAN_TWO = 'Two copies of a variant that ClinVar lists as pathogenic. Confirm with a clinical test and see a genetic counselor.';
   function scanClinvar(lib, parsed) {
     var sc = lib.clinvarScan, out = [];
-    if (!sc) return out;
+    if (!sc || parsed.build36) return out;
     sc.variants.forEach(function (v) {
       var g = parsed.genotypes[v.rs];
       if (!g) return;
@@ -196,6 +235,7 @@
   }
 
   function score(lib, parsed) {
+    parsed.indel23 = lib.indel23andMe || null;
     var out = lib.markers.map(function (m) { return scoreMarker(m, parsed); });
     lib.composites.forEach(function (c) { out.push(scoreComposite(c, parsed)); });
     return out.concat(scanClinvar(lib, parsed));
@@ -247,7 +287,7 @@
     brief.sort(function (a, b) { return TIERS.indexOf(a.tier) - TIERS.indexOf(b.tier); });
     function ids(cov) { return scored.filter(function (r) { return r.coverage === cov && (!lib.categories.find(function (c) { return c.id === r.category; }).sensitive || reveal.has(r.category)); }).map(function (r) { return r.name; }); }
     return { libraryVersion: lib.meta.libraryVersion, summary: summary, sections: sections, tiers: tiers, doctorBrief: brief,
-      coverage: { notOnFile: ids('not_on_file'), noCall: ids('no_call'), unrecognized: ids('unrecognized'), unreliable: ids('unreliable'), notRead: ids('not_read') },
+      coverage: { notOnFile: ids('not_on_file'), noCall: ids('no_call'), unrecognized: ids('unrecognized'), unreliable: ids('unreliable'), notRead: ids('not_read'), withheld: ids('withheld') },
       notCovered: lib.notCovered, scan: lib.clinvarScan ? { snapshot: lib.clinvarScan.meta.snapshot, variants: lib.clinvarScan.variants.length } : null };
   }
 
@@ -255,7 +295,7 @@
     var parsed = parse(text, libraryRsids(lib), positionIndex(lib));
     var scored = score(lib, parsed);
     var report = buildReport(lib, scored, opts);
-    report.file = { vendor: parsed.vendor, format: parsed.format, rowsRead: parsed.rowsRead };
+    report.file = { vendor: parsed.vendor, format: parsed.format, rowsRead: parsed.rowsRead, build36: !!parsed.build36 };
     return { parsed: parsed, scored: scored, report: report };
   }
 

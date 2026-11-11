@@ -57,10 +57,9 @@ rare variants. A "typical" result does not rule out risk; only clinical testing 
 **Why are some results missing?** Each company's chip reads different positions. AncestryDNA files, for example,
 don't include some drug-response markers (such as CYP2D6\*4 and VKORC1), so those results can't be shown.
 
-**Does it work with 23andMe?** Yes. It has been tested with a real 23andMe file. Which markers appear depends on
-your chip version. Insertion/deletion markers (such as BRCA1 185delAG and CFTR F508del) are read only from
-AncestryDNA files, because 23andMe does not document what its letters mean at those positions. If something looks
-wrong, please open an issue (without attaching your DNA file).
+**Does it work with 23andMe?** Yes. It has been checked against public 23andMe files from 2008 to 2025. Which
+markers appear depends on your chip version. Older files (2008-2011) use an earlier genome map, so the wider ClinVar
+scan is skipped for them. If something looks wrong, please open an issue (without attaching your DNA file).
 
 **Is it really free?** Yes. There are no accounts, ads or paid features.
 
@@ -76,16 +75,16 @@ network traffic blocked. The page itself also has a Content-Security-Policy that
 Every push runs the engine tests and library checks automatically (`.github/workflows/tests.yml`).
 
 ## Status
-Version 0.1.4 (November 2026).
+Version 0.1.5 (November 2026).
 
 | Area | State |
 | --- | --- |
 | Marker library | 154 markers, 31 combined readings, 8-variant strict ClinVar scan |
-| Engine and tests | 46 automated tests pass (47 with a real raw-data file; checked with real AncestryDNA and 23andMe files) |
+| Engine and tests | 49 automated tests pass (50 with a real raw-data file); run on 84 public raw-data files without errors |
 | Report | One offline HTML file; results ranked by meaningfulness, one line per marker with a plain-English explanation |
 | Windows program | `DNA-Decrypt.exe`, built and self-signed by `build_exe.ps1`, published on the Releases page |
-| AncestryDNA files | Tested with real .txt and .zip files |
-| 23andMe files | Tested with a real file; markers under 23andMe's internal IDs are found by position (single-letter markers only) |
+| AncestryDNA files | Tested with real .txt and .zip files and 17 public files |
+| 23andMe files | Checked with 63 public files (2008-2025); internal IDs found by position (single letters) or exact probe ID (D/I) |
 | Clinical review of interpretations | Not done; affected results are marked with a dagger in the report |
 
 **What's in the library**
@@ -94,7 +93,7 @@ Version 0.1.4 (November 2026).
 - Health results are ranked into three meaningfulness tiers: high 65, medium 49, low 34, plus the ClinVar scan (high).
 - On an AncestryDNA file, 130 of 154 markers, 25 of 31 combined readings and 7 of 8 scan variants can be read. The
   rest need positions only on 23andMe chips (e.g. CYP2C9\*2/\*8/\*11, CYP2C19\*17, CYP2D6\*4/\*41, VKORC1, ADH1B,
-  HBB sickle and E, Kell, APOE rs7412).
+  HBB sickle and E, Kell, APOE rs7412). Older AncestryDNA files (chip V1, 2014-2015) give about 65 results.
 - Every marker and combined reading has a short plain-English explanation (`library/explanations.py`) shown after
   the result: what the gene does, what the variant changes, and the current understanding.
 
@@ -105,7 +104,10 @@ Version 0.1.4 (November 2026).
   and 5 trait positions (ADORA2A, AR, the 3 bitter-taste sites) it is not; each matches the published risk/effect
   allele in the literature.
 - Insertion/deletion letters follow AncestryDNA's D/I convention. BRCA1 185delAG is reported with D = normal (unlike
-  its name).
+  its name). 23andMe's letters were worked out per probe (see Design decisions).
+- Population check: every marker was read from public raw-data files of 76 different people (AncestryDNA and 23andMe,
+  2008-2025). No single-letter marker had letters outside its two expected letters, no rare carrier or cancer marker
+  showed two copies, and variant frequencies were in line with published frequencies for a mostly European sample.
 - Combined readings were checked against CPIC tables, the FDA warfarin label (all 18 cells tested) and published
   studies.
 - Sources are public and commercially usable (dbSNP, ClinVar, CPIC, FDA labels, peer-reviewed studies); SNPedia is
@@ -188,18 +190,23 @@ general reader. Add more with `trait(...)` in `library/build_library.py`.
 ## Design decisions
 - Sensitive categories are hidden until the user opts in: inherited cancer genes, Alzheimer's, Parkinson's, carrier status, and the wider ClinVar scan.
 - Alleles are forward-strand. The engine flips non-palindromic genotypes reported on the opposite strand.
-- Insertion/deletion markers use AncestryDNA's D/I letters, and only AncestryDNA files are read for them (see below).
+- Insertion/deletion markers use AncestryDNA's D/I letters; 23andMe files are read for them only through checked probe IDs (see below).
 - 23andMe lists some markers under internal "i" IDs instead of rsIDs. For 23andMe files only, a single-letter marker
   missing by rsID is read from a row at the exact same GRCh37 position (`library/positions.json`), but only if every
   letter is one of the marker's two expected letters (no strand flipping) and all rows at that position agree. The
   result's note names the 23andMe ID it came from. AncestryDNA files never use position matching.
-- Insertion/deletion (D/I) positions are read only from AncestryDNA files. 23andMe does not publish which of its D/I
-  letters is the usual one for each marker, and at least one (BRCA1 185delAG) is reported to be the reverse of
-  AncestryDNA's. So on 23andMe and other files these positions are never read, by rsID or by position: BRCA1 185delAG
-  and 5382insC, BRCA2 6174delT, CHEK2 1100delC, CFTR F508del, GJB2 35delG and HEXA 1278insTATC are listed as "not
-  read", and the combined readings that use a D/I position (cystic fibrosis, Tay-Sachs, ABO, APOL1) treat it as
-  missing. Before 0.1.4 they were read from 23andMe files by rsID with AncestryDNA's letter meanings, which could
-  report a normal BRCA1 result as two copies of the variant.
+- Insertion/deletion (D/I) positions on 23andMe files are read only through the exact probe IDs in `INDEL_23ANDME`
+  (`library/build_library.py`), never by position: several 23andMe probes sit at the same position with opposite
+  letters. The letters were worked out from public raw-data files of 62 people on 23andMe (files from 2008 to 2025) and 17 on
+  AncestryDNA, including 3 people tested by both. Every listed probe showed the same usual genotype in every file, and
+  two cystic fibrosis carriers showed one copy. BRCA1 185delAG uses opposite letters on the two companies (usual
+  genotype II on 23andMe, DD on AncestryDNA), so the engine swaps them; the other six markers, ABO and APOL1 G2 match.
+  If several listed probes are in a file they must agree, or the marker is not read. For the seven rare markers, a
+  two-copy result is withheld as a likely chip error (as in the ClinVar scan). Other files never read D/I positions.
+  Before 0.1.4, 23andMe D/I letters were read with AncestryDNA's meanings, which could report a normal BRCA1 result as
+  two copies of the variant (issue #1).
+- Older 23andMe files (2008-2011) use genome build 36 positions. For them, position matching and the ClinVar scan are
+  skipped, because both need build 37 positions.
 - Markers whose strand, notation or effect direction was inferred have `verify.level = "inferred"` and are marked with
   a dagger in the report (`CONFIG.showUnverifiedFlag` in the app).
 - Not covered on purpose: Rh type, haplogroups/ancestry, Lynch/CDH1 genes, most BRCA variants (see `notCovered` in the library).

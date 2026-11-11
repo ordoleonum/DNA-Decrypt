@@ -4,7 +4,7 @@
   var CONFIG = {
     appName: 'DNA Decrypt',
     company: 'DNA Decrypt',
-    version: 'v0.1.4',
+    version: 'v0.1.5',
     showUnverifiedFlag: true,   // set to false once interpretations have had expert review
     minMarkers: 5,
     minRows: 5000
@@ -103,7 +103,7 @@
       var ok = res.scored.filter(function (r) { return r.coverage === 'ok'; }).length;
       if (ok < CONFIG.minMarkers)
         throw new Error('Only ' + ok + ' of the markers in this program were found in your file, so a report would not be useful. This can happen with older or very limited test versions.');
-      state.scored = res.scored; state.meta = { vendor: res.parsed.vendor, rows: res.parsed.rowsRead };
+      state.scored = res.scored; state.meta = { vendor: res.parsed.vendor, rows: res.parsed.rowsRead, build36: !!res.parsed.build36 };
       state.file = null; $('fileInput').value = '';
       prepareChoices();
     } catch (err) {
@@ -225,7 +225,9 @@
     h += '<p>A result that shows no variant does not rule out risk. This report checks only a small number of markers, and consumer DNA files can contain errors. Anything that matters for your health should be confirmed with a clinical test ordered by a health provider.</p>';
     if (anyFlag) h += '<p>\u2020 The interpretation of this marker is still being reviewed.</p>';
     if (rep.coverage.notOnFile.length) h += '<details class="noprint"><summary>' + rep.coverage.notOnFile.length + ' markers were not in your file</summary><p class="fine">' + esc(rep.coverage.notOnFile.join('; ')) + '</p></details>';
-    if (rep.coverage.notRead.length) h += '<details class="noprint"><summary>' + rep.coverage.notRead.length + ' insertion/deletion markers were not read</summary><p class="fine">Only AncestryDNA files document what the D and I letters at these positions mean, so they are not read from other files: ' + esc(rep.coverage.notRead.join('; ')) + '</p></details>';
+    if (state.meta.build36) h += '<p>This is an older 23andMe file that uses an earlier genome map (build 36), so the wider ClinVar scan was not run and markers listed under 23andMe internal IDs were not matched by position.</p>';
+    if (rep.coverage.withheld.length) h += '<p>' + rep.coverage.withheld.length + ' result' + (rep.coverage.withheld.length === 1 ? ' was' : 's were') + ' withheld as a likely chip error (two copies of a rare variant): ' + esc(rep.coverage.withheld.join('; ')) + '. A clinical test can check ' + (rep.coverage.withheld.length === 1 ? 'it' : 'them') + '.</p>';
+    if (rep.coverage.notRead.length) h += '<details class="noprint"><summary>' + rep.coverage.notRead.length + ' insertion/deletion markers were not read</summary><p class="fine">The meaning of the D and I letters at these positions has been checked only for AncestryDNA files and for specific 23andMe markers, so they were not read from this file: ' + esc(rep.coverage.notRead.join('; ')) + '</p></details>';
     h += '<details class="noprint"><summary>What this report does not cover</summary><ul>' + rep.notCovered.map(function (n) { return '<li>' + esc(n.item) + ': ' + esc(n.reason) + '</li>'; }).join('') + '</ul></details>';
     h += '<p class="fine"><button class="linkbtn noprint" data-act="restart">Start over and erase this report from this window</button></p></div>';
     h += '<div class="printfoot">For informational purposes only. Not medical advice. Discuss these results with your doctor. ' + esc(CONFIG.appName) + ' ' + esc(CONFIG.version) + '</div>';

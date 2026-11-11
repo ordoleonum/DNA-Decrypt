@@ -58,10 +58,10 @@ add('HFE_H63D','iron','HFE H63D','HFE','rs1799945','C','G',(N,'No copies of H63D
 common('HFE_S65C','iron','HFE S65C','HFE','rs1800730','A','T','No copies of this rarer iron-overload variant.','One copy of a rare minor iron variant; rarely significant on its own.','Two copies of a rare minor iron variant; mention to your doctor if iron tests are ever high.')
 # --- Drug processing
 add('CYP2C9_3','drug','CYP2C9*3','CYP2C9','rs1057910','A','C',(N,'No copies of the slow-enzyme version (affects drugs such as warfarin and some NSAIDs).'),(C,'One copy of the slow-enzyme version. Some drugs (e.g., warfarin, some NSAIDs) may stay in the body longer; mention to prescribers.'),(X,'Two copies: much slower processing of some drugs (e.g., warfarin). Tell prescribers; doses may need adjusting.'),'Only some CYP2C9 variants are covered; not a full metabolizer status.')
-add('CYP2C9_2','drug','CYP2C9*2','CYP2C9','rs1799853','C','T',(N,'No copies of this slow-enzyme version.'),(C,'One copy of a mildly slower enzyme version; mention to prescribers of warfarin or some NSAIDs.'),(X,'Two copies: slower processing of some drugs (e.g., warfarin). Tell prescribers.'),'Not on AncestryDNA arrays; typically on 23andMe.','inferred','Check coverage on 23andMe chips.')
+add('CYP2C9_2','drug','CYP2C9*2','CYP2C9','rs1799853','C','T',(N,'No copies of this slow-enzyme version.'),(C,'One copy of a mildly slower enzyme version; mention to prescribers of warfarin or some NSAIDs.'),(X,'Two copies: slower processing of some drugs (e.g., warfarin). Tell prescribers.'),'Not on AncestryDNA arrays; typically on 23andMe.','inferred','Present on all 63 public 23andMe files checked (2008-2025).')
 add('CYP2C19_2','drug','CYP2C19*2','CYP2C19','rs4244285','G','A',(N,'No copies of the slow-enzyme version (affects clopidogrel, some antidepressants and PPIs).'),(C,'One copy of a reduced-function version. Clopidogrel may work less well and some antidepressants and PPIs may be processed more slowly; mention to prescribers.'),(X,'Two copies: poor processing of some drugs. Clopidogrel may be much less effective; tell prescribers.'),'Other CYP2C19 variants are not all covered.')
 add('CYP2C19_3','drug','CYP2C19*3','CYP2C19','rs4986893','G','A',(N,'No copies of this slow-enzyme version.'),(C,'One copy of a no-function version; same cautions as CYP2C19*2.'),(X,'Two copies: poor processing of some drugs; tell prescribers.'),'')
-add('CYP2C19_17','drug','CYP2C19*17','CYP2C19','rs12248560','C','T',(N,'No copies of the faster-enzyme version.'),(C,'One copy of the faster-enzyme version; some drugs (some antidepressants, PPIs) may be cleared faster than average.'),(C,'Two copies: faster-than-average processing of some drugs, so standard doses may work less well.'),'Not on AncestryDNA arrays; typically on 23andMe.','inferred','Check coverage on 23andMe chips.')
+add('CYP2C19_17','drug','CYP2C19*17','CYP2C19','rs12248560','C','T',(N,'No copies of the faster-enzyme version.'),(C,'One copy of the faster-enzyme version; some drugs (some antidepressants, PPIs) may be cleared faster than average.'),(C,'Two copies: faster-than-average processing of some drugs, so standard doses may work less well.'),'Not on AncestryDNA arrays; typically on 23andMe.','inferred','Present on 62 of 63 public 23andMe files checked (2008-2025).')
 add('CYP2D6_4','drug','CYP2D6*4','CYP2D6','rs3892097','C','T',(N,'No copies of this non-working enzyme version.'),(C,'One copy of a non-working version: reduced processing of many drugs (e.g., some antidepressants, codeine).'),(X,'Two copies: poor processing of many drugs (e.g., codeine may not work; some antidepressants build up). Tell prescribers.'),'Not on AncestryDNA arrays; CYP2D6 has many other variants and gene copy-number changes.','inferred','Strand verified against dbSNP; not on the AncestryDNA chip. Awaiting expert review.')
 add('CYP3A5_3','drug','CYP3A5*3','CYP3A5','rs776746','T','C',(I,'No *3 copies: you likely make the CYP3A5 enzyme, which affects dosing of some drugs (e.g., tacrolimus).'),(C,'One copy of the common low-expresser version.'),(C,'Two copies of the common low-expresser version, typical for many people; mainly matters for dosing some transplant drugs (e.g., tacrolimus).'),'Allele frequencies differ widely between populations.','inferred','Normal/variant direction and strand were inferred.')
 add('SLCO1B1_5','drug','SLCO1B1 (statin muscle side effects)','SLCO1B1','rs4149056','T','C',(N,'No copies of the version linked to statin muscle side effects.'),(C,'One copy: somewhat higher risk of muscle side effects from some statins (especially simvastatin); mention to your prescriber.'),(X,'Two copies: higher risk of statin muscle side effects; mention to your prescriber.'),'')
@@ -101,9 +101,9 @@ common('MC4R_RS17782313','diabetes','Weight tendency, MC4R','MC4R','rs17782313',
 common('CRC_8Q24_RS6983267','cancer_common','Colorectal cancer, 8q24 region','CCAT2/MYC region','rs6983267','T','G','No copies of the version linked to a slightly higher colorectal cancer risk.','One copy of a version linked to a slightly higher colorectal cancer risk (small effect). Does not change screening advice beyond family-history guidance.','Two copies of a version linked to a slightly higher colorectal cancer risk (small effect). Does not change screening advice beyond family-history guidance.','Common, low-impact variant; direction based on published associations.','inferred','Risk-allele direction from published studies. Awaiting expert review.')
 common('GASTRIC_PSCA_RS2294008','cancer_common','Stomach cancer, PSCA','PSCA','rs2294008','C','T','No copies of the version linked to slightly higher stomach cancer risk.','One copy of a common version linked to slightly higher stomach cancer risk in some studies (small effect).','Two copies of a common version linked to slightly higher stomach cancer risk in some studies (small effect).','Low-impact variant; direction based on published associations.','inferred','Risk-allele direction from published studies. Awaiting expert review.')
 # --- Cancer inherited
-rare('BRCA1_5382INSC','cancer_inherited','BRCA1 5382insC','BRCA1','rs80357906','D','I','breast and ovarian cancer predisposition',caveat='Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing.',level='inferred',note='D/I notation: normal = DD assumed; check vendor documentation.')
-rare('BRCA2_6174DELT','cancer_inherited','BRCA2 6174delT','BRCA2','rs80359550','I','D','breast, ovarian, prostate and pancreatic cancer predisposition',caveat='Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing.',level='inferred',note='D/I notation: normal = II assumed; check vendor documentation.')
-rare('CHEK2_1100DELC','cancer_inherited','CHEK2 1100delC','CHEK2','rs555607708','I','D','breast and other cancer predisposition',caveat='Many other CHEK2 variants are not covered.',level='inferred',note='D/I notation: normal = II assumed.')
+rare('BRCA1_5382INSC','cancer_inherited','BRCA1 5382insC','BRCA1','rs80357906','D','I','breast and ovarian cancer predisposition',caveat='Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing.',note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). Usual genotype is DD on both.')
+rare('BRCA2_6174DELT','cancer_inherited','BRCA2 6174delT','BRCA2','rs80359550','I','D','breast, ovarian, prostate and pancreatic cancer predisposition',caveat='Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing.',note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). Usual genotype is II on both.')
+rare('CHEK2_1100DELC','cancer_inherited','CHEK2 1100delC','CHEK2','rs555607708','I','D','breast and other cancer predisposition',caveat='Many other CHEK2 variants are not covered.',note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). Usual genotype is II on both.')
 rare('MUTYH_G396D','cancer_inherited','MUTYH G396D','MUTYH','rs36053993','C','T','colorectal cancer predisposition; two copies cause MUTYH-associated polyposis',caveat='Other MUTYH variants are not covered.')
 rare('MUTYH_Y179C','cancer_inherited','MUTYH Y179C','MUTYH','rs34612342','T','C','colorectal cancer predisposition; two copies cause MUTYH-associated polyposis',caveat='Other MUTYH variants are not covered.')
 rare('APC_I1307K','cancer_inherited','APC I1307K','APC','rs1801155','T','A','higher colorectal cancer risk',caveat='A/T marker: strand cannot be auto-checked.')
@@ -117,8 +117,8 @@ common('SNCA_RS356219','parkinsons','SNCA','SNCA','rs356219','A','G','No copies 
 # --- Carrier status
 for sid,nm,rs,ref,alt in (('CFTR_G542X','CFTR G542X','rs113993959','G','T'),('CFTR_G551D','CFTR G551D','rs75527207','G','A'),('CFTR_W1282X','CFTR W1282X','rs77010898','G','A'),('CFTR_R117H','CFTR R117H','rs78655421','G','A')):
     rare(sid,'carrier',nm,'CFTR',rs,ref,alt,'cystic fibrosis carrier status',recessive=True,caveat='Many other CFTR variants exist; a carrier panel is needed if planning children.')
-rare('CFTR_F508DEL','carrier','CFTR F508del','CFTR','rs113993960','I','D','cystic fibrosis carrier status',recessive=True,caveat='Many other CFTR variants exist; a carrier panel is needed if planning children.',level='inferred',note='D/I notation: normal = II assumed.')
-rare('GJB2_35DELG','carrier','GJB2 35delG','GJB2','rs80338939','I','D','hearing loss carrier status',recessive=True,level='inferred',note='D/I notation: normal = II assumed.')
+rare('CFTR_F508DEL','carrier','CFTR F508del','CFTR','rs113993960','I','D','cystic fibrosis carrier status',recessive=True,caveat='Many other CFTR variants exist; a carrier panel is needed if planning children.',note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). Usual genotype is II on both.')
+rare('GJB2_35DELG','carrier','GJB2 35delG','GJB2','rs80338939','I','D','hearing loss carrier status',recessive=True,note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). Usual genotype is II on both.')
 rare('HBB_HBC','carrier','Hemoglobin C (HBB)','HBB','rs33930165','C','T','hemoglobin C carrier status',recessive=True)
 add('HBB_SICKLE','carrier','Sickle cell (HBB)','HBB','rs334','T','A',(N,'No copies of the sickle cell variant.'),(X,'One copy: sickle cell trait. Usually no symptoms, but can matter with extreme exertion or high altitude, and for family planning.'),(X,'Two copies: sickle cell disease. See a doctor.'),'A/T marker: strand cannot be auto-checked. Not on AncestryDNA arrays; typically on 23andMe.','inferred','Strand verified against dbSNP; not on the AncestryDNA chip. Awaiting expert review.')
 # --- Other conditions
@@ -280,22 +280,22 @@ trait('FUN_NOROVIRUS','trait_fun','Stomach flu (norovirus) resistance','FUT2','r
 # --- Additions (2026-11-08): markers commonly reported by consumer DNA tests.
 # Alleles checked against dbSNP GRCh37 (tools/verify_library.py); indel letters checked against AncestryDNA's D/I convention.
 # Inherited cancer
-rare('BRCA1_185DELAG','cancer_inherited','BRCA1 185delAG','BRCA1','rs80357914','D','I','breast and ovarian cancer predisposition',caveat='Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing.',level='inferred',note='Vendor letters: AncestryDNA reports the usual genotype as DD, so D = normal here even though the variant is a deletion. 23andMe reports BRCA under its own IDs. Awaiting expert review.')
+rare('BRCA1_185DELAG','cancer_inherited','BRCA1 185delAG','BRCA1','rs80357914','D','I','breast and ovarian cancer predisposition',caveat='Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing.',note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). The companies use opposite letters here: the usual genotype is DD on AncestryDNA and II on 23andMe (also seen in the same people tested by both).')
 # Carrier status
-rare('HEXA_1278INSTATC','carrier','HEXA 1278insTATC','HEXA','rs387906309','D','I','Tay-Sachs disease carrier status',recessive=True,caveat='Most common in people with Ashkenazi Jewish, French-Canadian or Cajun ancestry. Other HEXA variants are not covered.',level='inferred',note='D/I: AncestryDNA reports the usual genotype as DD (D = no insertion).')
+rare('HEXA_1278INSTATC','carrier','HEXA 1278insTATC','HEXA','rs387906309','D','I','Tay-Sachs disease carrier status',recessive=True,caveat='Most common in people with Ashkenazi Jewish, French-Canadian or Cajun ancestry. Other HEXA variants are not covered.',note='Letters checked in public AncestryDNA and 23andMe raw-data files (17 and 62 people). Usual genotype is DD on both.')
 rare('HEXA_G269S','carrier','HEXA G269S','HEXA','rs121907954','C','T','late-onset Tay-Sachs disease carrier status',recessive=True,caveat='Other HEXA variants are not covered.')
 rare('ASPA_E285A','carrier','ASPA E285A','ASPA','rs28940279','A','C','Canavan disease carrier status',recessive=True,caveat='Most common in people with Ashkenazi Jewish ancestry. Other ASPA variants are not covered.')
 rare('ELP1_IVS20','carrier','ELP1 (IKBKAP) splice variant','ELP1','rs111033171','A','G','familial dysautonomia carrier status',recessive=True,caveat='Most common in people with Ashkenazi Jewish ancestry.')
 rare('ACADM_K304E','carrier','ACADM K304E','ACADM','rs77931234','A','G','MCAD deficiency carrier status; MCAD deficiency affects how the body uses fat for energy during fasting',recessive=True,caveat='Newborn screening tests for MCAD deficiency in many countries. Other ACADM variants are not covered.')
 rare('PAH_R408W','carrier','PAH R408W','PAH','rs5030858','G','A','phenylketonuria (PKU) carrier status',recessive=True,caveat='Many other PAH variants exist. Newborn screening tests for PKU.')
 rare('ALDOB_A149P','carrier','ALDOB A149P','ALDOB','rs1800546','C','G','hereditary fructose intolerance carrier status; two copies mean fruit sugar can make you ill',recessive=True,caveat='Other ALDOB variants are not covered.')
-rare('MEFV_M694V','carrier','MEFV M694V','MEFV','rs61752717','T','C','familial Mediterranean fever carrier status',recessive=True,caveat='Most common in people with Armenian, Turkish, Arab, Jewish or other Mediterranean ancestry. Not on AncestryDNA arrays.',level='inferred',note='Not on the AncestryDNA chip; 23andMe coverage unconfirmed.')
+rare('MEFV_M694V','carrier','MEFV M694V','MEFV','rs61752717','T','C','familial Mediterranean fever carrier status',recessive=True,caveat='Most common in people with Armenian, Turkish, Arab, Jewish or other Mediterranean ancestry. Not on AncestryDNA arrays.',level='inferred',note='Not on the AncestryDNA chip; present on 58 of 63 public 23andMe files checked (26 of them under a 23andMe internal ID).')
 # Other conditions
 add('UGT1A1_GILBERT','other','Gilbert syndrome (UGT1A1)','UGT1A1','rs887829','C','T',(N,'No copies of the Gilbert syndrome version.'),(I,'One copy of the Gilbert syndrome version. This usually has no effect.'),(C,'Two copies: you likely have Gilbert syndrome, a harmless condition in about 1 in 10 people. Bilirubin (a yellow substance in blood) can read high on blood tests, and your eyes may look slightly yellow when you are ill, tired or fasting. Tell your doctor so it is not mistaken for liver disease. It also affects the dose of a few drugs, such as the cancer drug irinotecan.'),'This marker stands in for the UGT1A1*28 version, which DNA chips cannot read directly.','inferred','Proxy (tag) for UGT1A1*28; strongest in people of European ancestry.')
 add('HLAB27_PROXY','other','HLA-B27 (proxy marker)','HLA-B','rs4349859','G','A',(N,'The proxy marker shows no sign of HLA-B27.'),(C,'The proxy marker suggests you carry HLA-B27. About 1 in 12 people of European ancestry do, and most never have problems. It is linked to ankylosing spondylitis: long-lasting back pain and stiffness, often worse in the morning. If you have that kind of back pain, mention this result to your doctor.'),(C,'The proxy marker suggests you carry HLA-B27 (possibly two copies). Most people with it never have problems. If you have long-lasting back pain and stiffness, mention this result to your doctor.'),'A proxy that works best in people of European ancestry; a blood test can confirm HLA-B27.','inferred','Proxy (tag) accuracy varies by ancestry.')
 common('IRON_TMPRSS6','other','Iron levels, TMPRSS6','TMPRSS6','rs855791','G','A','No copies of the version linked to slightly lower iron levels.','One copy of a common version linked to slightly lower iron and hemoglobin levels. Small effect.','Two copies; slightly lower iron and hemoglobin levels on average. Diet, blood loss and periods matter far more.','Small effect.','inferred','Effect allele from published studies; needs review.')
 # Drug processing
-add('NUDT15_R139C','drug','NUDT15 (thiopurine sensitivity)','NUDT15','rs116855232','C','T',(N,'No copies of this thiopurine-sensitivity variant.'),(C,'One copy: thiopurine drugs (azathioprine, mercaptopurine) may need lower doses. Tell prescribers.'),(X,'Two copies: very high risk of serious side effects from thiopurine drugs at standard doses. Tell prescribers.'),'Most common in people of East Asian or Hispanic ancestry. Not on AncestryDNA arrays.','inferred','Not on the AncestryDNA chip; 23andMe coverage unconfirmed.')
+add('NUDT15_R139C','drug','NUDT15 (thiopurine sensitivity)','NUDT15','rs116855232','C','T',(N,'No copies of this thiopurine-sensitivity variant.'),(C,'One copy: thiopurine drugs (azathioprine, mercaptopurine) may need lower doses. Tell prescribers.'),(X,'Two copies: very high risk of serious side effects from thiopurine drugs at standard doses. Tell prescribers.'),'Most common in people of East Asian or Hispanic ancestry. Not on AncestryDNA arrays.','inferred','Not on the AncestryDNA chip; present on 18 of 63 public 23andMe files checked.')
 common('CYP4F2_3','drug','CYP4F2*3 (warfarin dose)','CYP4F2','rs2108622','C','T','No copies of this version.','One copy: warfarin may need a slightly higher dose. Mention it to prescribers.','Two copies: warfarin often needs a somewhat higher dose. Mention it to prescribers.','A small effect compared with VKORC1 and CYP2C9.')
 add('HLAA3101_PROXY','drug','HLA-A*31:01 proxy (carbamazepine reaction)','HLA-A','rs1061235','A','T',(N,'The proxy marker shows no sign of HLA-A*31:01.'),(C,'The proxy marker suggests HLA-A*31:01 may be present. It raises the risk of a serious skin reaction to carbamazepine, an epilepsy and nerve-pain drug. A clinical HLA test can confirm; tell prescribers.'),(C,'The proxy marker suggests HLA-A*31:01 may be present (possibly two copies). It raises the risk of a serious skin reaction to carbamazepine. A clinical HLA test can confirm; tell prescribers.'),'A proxy that works best in people of European ancestry.','inferred','A/T marker and proxy; accuracy varies by ancestry.')
 add('CYP2B6_6','drug','CYP2B6*6 (efavirenz)','CYP2B6','rs3745274','G','T',(N,'No copies of the slower CYP2B6 version.'),(C,'One copy of a slower version: the HIV drug efavirenz (and some others, such as methadone) may build up somewhat. Mention it to prescribers.'),(X,'Two copies: slow processing of efavirenz. Standard doses can cause side effects such as dizziness and vivid dreams; a lower dose may be needed. Tell prescribers.'),'CYP2B6*6 is defined by two markers; this checks the main one.')
@@ -391,7 +391,7 @@ COMPOSITES=[
   partial={'rs429358':{'TT':(N,'No copies of ε4, the main common genetic Alzheimer\'s risk factor. (rs7412 is not available, so ε2 vs ε3 cannot be separated; both are neutral or protective.)'),
                        'CT':(X,'One copy of ε4 (ε3/ε4 or ε2/ε4), the main common genetic risk factor for Alzheimer\'s. It does not mean you will develop it.'),
                        'CC':(X,'Two copies of ε4, a substantially higher Alzheimer\'s risk. It does not mean you will develop it.')}},
-  caveat='Age, family history and lifestyle matter more than APOE alone.',verify=dict(level='standard',note='Check against ClinVar/AlzGene.'),sensitive=True),
+  caveat='Age, family history and lifestyle matter more than APOE alone.',verify=dict(level='standard',note="Letters checked against dbSNP; effects from published Alzheimer's studies."),sensitive=True),
  dict(id='ABO',category='blood',name='ABO blood type (inferred)',gene='ABO',rsids=['rs8176719','rs8176746'],alleleSets={'rs8176719':['D','I'],'rs8176746':['G','T']},
   rules={'DD|*':(I,'Most likely blood type O (O/O).'),
          'DI|GG':(I,'Most likely blood type A (A/O): one A allele and one O allele.'),
@@ -402,7 +402,7 @@ COMPOSITES=[
          'II|TT':(I,'Most likely blood type B (B/B).')},
   partial={},
   caveat='An inference from array markers, not lab blood typing, and Rh cannot be determined. Confirm with a medical record or donor card. Non-O types have slightly higher average clot risk, and type A has been linked to slightly higher stomach cancer risk in large studies; both effects are small.',
-  verify=dict(level='inferred',note='D/I letters follow AncestryDNA; A-vs-B direction awaiting expert review.'),sensitive=False)]
+  verify=dict(level='inferred',note='O letters checked in public AncestryDNA and 23andMe files: D = O on both (people with a B copy and no O show II). A-vs-B direction awaiting expert review.'),sensitive=False)]
 
 def counted(sets):
     """For each position, (sorted genotype key, number of effect letters). sets = [(a, b), ...] with b = effect letter."""
@@ -423,7 +423,7 @@ COMPOSITES.append(dict(id='APOL1',category='other',name='APOL1 (kidney disease r
                          'AG':(C,'One copy of APOL1 G1. G2 could not be checked; if you also carry G2, kidney risk is higher. A clinical test can tell.'),
                          'GG':apol1(2)}},
   caveat='Mostly found in people with recent African ancestry.',
-  verify=dict(level='inferred',note='G1 checked at rs73885319 only (rs60910145 is nearly always inherited with it). G2 letters: AncestryDNA reports the usual genotype as II, so D = G2.'),sensitive=False))
+  verify=dict(level='inferred',note='G1 checked at rs73885319 only (rs60910145 is nearly always inherited with it). G2 letters: the usual genotype is II on AncestryDNA and 23andMe (27 people checked, including the same people on both), so D = G2.'),sensitive=False))
 
 # NAT2 acetylator speed: slow letters rs1801280 C (NAT2*5) and rs1799930 A (NAT2*6).
 def nat2(n):
@@ -484,7 +484,7 @@ def combined(id,cat,name,gene,ids,fn,caveat,note='Combined reading; interpretati
 def k(n,i): return n[i] or 0                     # count, treating "not in file" as 0
 def unchecked(n,lab):
     ms=[lab[i] for i in lab if n[i] is None]
-    return '' if not ms else ' Not in your file, so not checked: '+', '.join(ms)+'.'
+    return '' if not ms else ' Not read from your file, so not checked: '+', '.join(ms)+'.'
 def found(n,lab):
     return [lab[i]+(' (two copies)' if n[i]==2 else '') for i in lab if n[i]]
 UNUSUAL=(I,'This is an unusual combination that cannot be read reliably and may be a chip error. A clinical test can tell.')
@@ -801,7 +801,7 @@ NOT_COVERED=[dict(item='Rh (positive/negative)',reason='Cannot be determined rel
  dict(item='Maternal/paternal haplogroups and ancestry percentages',reason='Need a large reference panel. The "Ancestry clues" section shows a few single markers only.'),
  dict(item='Lynch syndrome genes (MLH1, MSH2, MSH6, PMS2), CDH1, most BRCA variants',reason='Arrays cover only a handful of these; a clinical panel is needed.')]
 
-META=dict(libraryVersion='0.1.4',generated=datetime.date.today().isoformat(),
+META=dict(libraryVersion='0.1.5',generated=datetime.date.today().isoformat(),
  strand='forward (GRCh37). The engine auto-flips non-palindromic genotypes reported on the opposite strand.',
  statuses=dict(normal='No variant of note',lower_risk='Lower-end genetic risk',common_variant='Common variant, small effect',notable='Worth discussing with a doctor',info='Informational'),
  noCalls=['--','00','0','0/0','-','II_missing'],
@@ -867,9 +867,28 @@ if os.path.exists(_sp):
         v['about']=SCAN_ABOUT[v['gene']]
 out=dict(meta=META,categories=[dict(id=i,name=n,sensitive=s,**({'group':'traits'} if i in TRAIT_CATS else {})) for i,n,s in CATS],markers=M,composites=COMPOSITES,notCovered=NOT_COVERED)
 if SCAN: out['clinvarScan']=SCAN
+# 23andMe insertion/deletion (D/I) probes, matched by exact ID only (never by position: other 23andMe probes at the same
+# positions use opposite letters). Letters were worked out from public raw-data files: 62 people on 23andMe files from
+# 2008-2025 and 17 on AncestryDNA, including 3 people tested by both. In every file the probe below showed the same
+# letters for the usual genotype, and two cystic fibrosis carriers showed one copy as DI. `swap` means 23andMe's D and I
+# are the reverse of the library's (AncestryDNA) letters. `rareTwoCopy`: two copies of a rare variant are withheld as a
+# likely chip error, as in the ClinVar scan. Probes not listed here are never read.
+INDEL_23ANDME={
+ 'rs80357914':dict(ids=['i4000377','rs386833395','rs80357914'],swap=True,rareTwoCopy=True),   # BRCA1 185delAG
+ 'rs80357906':dict(ids=['i4000378','rs80357906'],swap=False,rareTwoCopy=True),               # BRCA1 5382insC
+ 'rs80359550':dict(ids=['i4000379','rs80359550'],swap=False,rareTwoCopy=True),               # BRCA2 6174delT
+ 'rs555607708':dict(ids=['i4000462'],swap=False,rareTwoCopy=True),                           # CHEK2 1100delC
+ 'rs113993960':dict(ids=['i3000001'],swap=False,rareTwoCopy=True),                           # CFTR F508del
+ 'rs80338939':dict(ids=['rs1801002','i5012697'],swap=False,rareTwoCopy=True),                # GJB2 35delG
+ 'rs387906309':dict(ids=['i4000391'],swap=False,rareTwoCopy=True),                           # HEXA 1278insTATC
+ 'rs8176719':dict(ids=['rs8176719'],swap=False,rareTwoCopy=False),                           # ABO O (common)
+ 'rs71785313':dict(ids=['rs71785313'],swap=False,rareTwoCopy=False)}                         # APOL1 G2
+_ind={m['rsid'] for m in M if m['alleles']['normal'] in 'DI'}|{r for c in COMPOSITES for r,a in c['alleleSets'].items() if a[0] in 'DI'}
+assert set(INDEL_23ANDME)==_ind, 'every D/I position needs a 23andMe entry: '+str(_ind^set(INDEL_23ANDME))
+out['indel23andMe']=INDEL_23ANDME
 # GRCh37 positions of single-letter markers (from the dbSNP check). The engine uses them, for 23andMe files only,
 # to find a marker that 23andMe lists under its own internal ID. Insertion/deletion markers are left out on purpose:
-# 23andMe does not document which of its D/I letters is the usual one.
+# several 23andMe probes sit at the same position with opposite letters, so they are matched by exact ID instead.
 _pp=os.path.join(here,'positions.json')
 if os.path.exists(_pp):
     _indel={m['rsid'] for m in M if m['alleles']['normal'] in 'DI'}|{r for c in COMPOSITES for r,a in c['alleleSets'].items() if a[0] in 'DI'}

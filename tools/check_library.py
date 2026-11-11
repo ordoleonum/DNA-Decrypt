@@ -40,6 +40,15 @@ if sc:
         if len(v['ref'])!=1 or len(v['alt'])!=1 or {v['ref'],v['alt']} in ({'A','T'},{'C','G'}): errs.append('scan variant not a clear SNV '+v['rs'])
         if v['af']<sc['meta']['minAlleleFrequency'] or v['stars']<2: errs.append('scan variant breaks a rule '+v['rs'])
     print(f"ClinVar scan: {len(sc['variants'])} variants, snapshot {sc['meta']['snapshot']}")
+# 23andMe insertion/deletion probes: one entry for every D/I position, no probe ID used twice, never by position
+ind={m['rsid'] for m in lib['markers'] if m['alleles']['normal'] in 'DI'}|{r for c in lib['composites'] for r,a in c['alleleSets'].items() if a[0] in 'DI'}
+i23=lib.get('indel23andMe') or {}
+if set(i23)!=ind: errs.append('indel23andMe must list exactly the D/I positions: '+str(sorted(set(i23)^ind)))
+ids=[i for e in i23.values() for i in e['ids']]
+if len(ids)!=len(set(ids)): errs.append('a 23andMe probe ID is listed twice')
+for r,e in i23.items():
+    if not e['ids'] or not isinstance(e['swap'],bool) or not isinstance(e['rareTwoCopy'],bool): errs.append('bad indel23andMe entry '+r)
+if ind & set(lib.get('positions') or {}): errs.append('a D/I position has a position-matching entry')
 rs=collections.Counter(m['rsid'] for m in lib['markers'])
 errs+=['duplicate rsid '+r for r,c in rs.items() if c>1]
 print(f"Library: {len(lib['markers'])} markers + {len(lib['composites'])} composites; structural errors: {len(errs)}")
