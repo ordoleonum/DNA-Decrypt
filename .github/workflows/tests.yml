@@ -1,0 +1,33 @@
+# Runs the automated checks on every push and pull request. No DNA files are used: only the
+# library and the engine, with made-up test genotypes.
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Engine tests
+        run: node engine/tests/run_tests.js
+
+      - name: Library structure check
+        run: python tools/check_library.py
+
+      - name: Library builds from source without errors
+        run: python library/build_library.py

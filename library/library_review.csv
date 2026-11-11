@@ -1,0 +1,186 @@
+id,category,name,gene,rsid,normal_allele,variant_allele,palindromic,sensitive_category,verify_level,verify_note,source_hint,caveat
+F5_LEIDEN,clotting,Factor V Leiden,F5,rs6025,C,T,False,False,standard,,"ClinVar, dbSNP",Does not rule out other clotting causes.
+F2_G20210A,clotting,Prothrombin G20210A,F2,rs1799963,G,A,False,False,standard,,"ClinVar, dbSNP",Does not rule out other clotting causes.
+HFE_C282Y,iron,HFE C282Y,HFE,rs1800562,G,A,False,False,standard,,"ClinVar, dbSNP",Rarer iron variants are not covered.
+HFE_H63D,iron,HFE H63D,HFE,rs1799945,C,G,True,False,standard,,"ClinVar, dbSNP",Common in roughly 1 in 5 people of European ancestry.
+HFE_S65C,iron,HFE S65C,HFE,rs1800730,A,T,True,False,standard,,"ClinVar, dbSNP",
+CYP2C9_3,drug,CYP2C9*3,CYP2C9,rs1057910,A,C,False,False,standard,,"PharmGKB, CPIC guidelines",Only some CYP2C9 variants are covered; not a full metabolizer status.
+CYP2C9_2,drug,CYP2C9*2,CYP2C9,rs1799853,C,T,False,False,inferred,Check coverage on 23andMe chips.,"PharmGKB, CPIC guidelines",
+CYP2C19_2,drug,CYP2C19*2,CYP2C19,rs4244285,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",Other CYP2C19 variants are not all covered.
+CYP2C19_3,drug,CYP2C19*3,CYP2C19,rs4986893,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2C19_17,drug,CYP2C19*17,CYP2C19,rs12248560,C,T,False,False,inferred,Check coverage on 23andMe chips.,"PharmGKB, CPIC guidelines",
+CYP2D6_4,drug,CYP2D6*4,CYP2D6,rs3892097,C,T,False,False,inferred,Strand verified against dbSNP; not on the AncestryDNA chip. Awaiting expert review.,"PharmGKB, CPIC guidelines",CYP2D6 has many other variants and gene copy-number changes.
+CYP3A5_3,drug,CYP3A5*3,CYP3A5,rs776746,T,C,False,False,inferred,Normal/variant direction and strand were inferred.,"PharmGKB, CPIC guidelines",Allele frequencies differ widely between populations.
+SLCO1B1_5,drug,SLCO1B1 (statin muscle side effects),SLCO1B1,rs4149056,T,C,False,False,standard,,"PharmGKB, CPIC guidelines",
+TPMT_2,drug,TPMT*2,TPMT,rs1800462,C,G,True,False,inferred,Strand verified against dbSNP. Awaiting expert review.,"PharmGKB, CPIC guidelines",Other TPMT variants are not covered.
+TPMT_3B,drug,TPMT*3B,TPMT,rs1800460,C,T,False,False,inferred,Strand verified against dbSNP. Awaiting expert review.,"PharmGKB, CPIC guidelines",Other TPMT variants are not covered.
+TPMT_3C,drug,TPMT*3C,TPMT,rs1142345,T,C,False,False,inferred,Strand verified against dbSNP. Awaiting expert review.,"PharmGKB, CPIC guidelines",Other TPMT variants are not covered.
+DPYD_2A,drug,DPYD*2A (chemotherapy sensitivity),DPYD,rs3918290,C,T,False,False,standard,,"PharmGKB, CPIC guidelines",Other DPYD variants are not covered.
+HLAB5701_PROXY,drug,HLA-B*57:01 proxy (abacavir hypersensitivity),HLA-B,rs2395029,T,G,False,False,inferred,Proxy accuracy varies by ancestry.,"PharmGKB, CPIC guidelines",A proxy only; a clinical HLA test is required before prescribing abacavir.
+OPRM1_A118G,drug,OPRM1 (opioid response),OPRM1,rs1799971,A,G,False,False,standard,,"PharmGKB, CPIC guidelines",Evidence is weak.
+MTHFR_C677T,folate,MTHFR C677T,MTHFR,rs1801133,G,A,False,False,standard,Reported on the coding (C/T) strand by some sources; the engine auto-flips.,"dbSNP, GWAS Catalog",Not treated as a medical issue by itself; be wary of supplement marketing.
+MTHFR_A1298C,folate,MTHFR A1298C,MTHFR,rs1801131,T,G,False,False,standard,,"dbSNP, GWAS Catalog",
+COMT_VAL158MET,brain,COMT Val158Met,COMT,rs4680,G,A,False,False,standard,,GWAS Catalog,Weak evidence; not predictive.
+9P21_RS1333049,heart,"Heart disease, 9p21 region (marker 1)",CDKN2B-AS1,rs1333049,G,C,True,False,standard,,"GWAS Catalog, ClinVar",Small effect even in carriers.
+9P21_RS10757274,heart,"Heart disease, 9p21 region (marker 2)",CDKN2B-AS1,rs10757274,A,G,False,False,standard,,"GWAS Catalog, ClinVar",Small effect even in carriers.
+LPA_RS10455872,heart,"Lipoprotein(a), LPA variant 1",LPA,rs10455872,A,G,False,False,standard,,"GWAS Catalog, ClinVar",The blood level is more informative than the variant.
+LPA_RS3798220,heart,"Lipoprotein(a), LPA variant 2",LPA,rs3798220,T,C,False,False,standard,,"GWAS Catalog, ClinVar",The blood level is more informative than the variant.
+APOB_R3527Q,heart,APOB R3527Q,APOB,rs5742904,C,T,False,False,standard,,"GWAS Catalog, ClinVar",Many other familial hypercholesterolemia variants are not covered.
+PCSK9_R46L,heart,PCSK9 R46L,PCSK9,rs11591147,G,T,False,False,standard,,"GWAS Catalog, ClinVar",
+AF_4Q25_RS10033464,rhythm,"Atrial fibrillation, 4q25 region",PITX2 region,rs10033464,G,T,False,False,standard,,GWAS Catalog,The strongest marker in this region (rs2200733) is not on AncestryDNA arrays.
+AF_KCNN3_RS13376333,rhythm,"Atrial fibrillation, KCNN3",KCNN3,rs13376333,C,T,False,False,inferred,Risk-allele direction from published studies. Awaiting expert review.,GWAS Catalog,
+TCF7L2_RS7903146,diabetes,"Type 2 diabetes, TCF7L2",TCF7L2,rs7903146,C,T,False,False,standard,,GWAS Catalog,Lifestyle matters more than any one gene.
+KCNJ11_E23K,diabetes,"Type 2 diabetes, KCNJ11",KCNJ11,rs5219,C,T,False,False,standard,,GWAS Catalog,
+PPARG_PRO12ALA,diabetes,"Type 2 diabetes, PPARG",PPARG,rs1801282,C,G,True,False,standard,,GWAS Catalog,Small effect.
+SLC30A8_R325W,diabetes,"Type 2 diabetes, SLC30A8",SLC30A8,rs13266634,T,C,False,False,standard,,GWAS Catalog,
+MTNR1B_RS10830963,diabetes,"Blood sugar, MTNR1B",MTNR1B,rs10830963,C,G,True,False,standard,,GWAS Catalog,
+FTO_RS9939609,diabetes,"Weight tendency, FTO",FTO,rs9939609,T,A,True,False,standard,A/T marker: strand cannot be auto-checked.,GWAS Catalog,
+MC4R_RS17782313,diabetes,"Weight tendency, MC4R",MC4R,rs17782313,T,C,False,False,standard,Risk allele C per Loos 2008; forward-strand letters checked against dbSNP.,GWAS Catalog,Small effect; it does not predict your weight.
+CRC_8Q24_RS6983267,cancer_common,"Colorectal cancer, 8q24 region",CCAT2/MYC region,rs6983267,T,G,False,False,inferred,Risk-allele direction from published studies. Awaiting expert review.,GWAS Catalog,"Common, low-impact variant."
+GASTRIC_PSCA_RS2294008,cancer_common,"Stomach cancer, PSCA",PSCA,rs2294008,C,T,False,False,inferred,Risk-allele direction from published studies. Awaiting expert review.,GWAS Catalog,Low-impact variant.
+BRCA1_5382INSC,cancer_inherited,BRCA1 5382insC,BRCA1,rs80357906,D,I,False,True,inferred,D/I notation: normal = DD assumed; check vendor documentation.,ClinVar,"Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing."
+BRCA2_6174DELT,cancer_inherited,BRCA2 6174delT,BRCA2,rs80359550,I,D,False,True,inferred,D/I notation: normal = II assumed; check vendor documentation.,ClinVar,"Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing."
+CHEK2_1100DELC,cancer_inherited,CHEK2 1100delC,CHEK2,rs555607708,I,D,False,True,inferred,D/I notation: normal = II assumed.,ClinVar,Many other CHEK2 variants are not covered.
+MUTYH_G396D,cancer_inherited,MUTYH G396D,MUTYH,rs36053993,C,T,False,True,standard,,ClinVar,Other MUTYH variants are not covered.
+MUTYH_Y179C,cancer_inherited,MUTYH Y179C,MUTYH,rs34612342,T,C,False,True,standard,,ClinVar,Other MUTYH variants are not covered.
+APC_I1307K,cancer_inherited,APC I1307K,APC,rs1801155,T,A,True,True,standard,,ClinVar,
+HOXB13_G84E,cancer_inherited,HOXB13 G84E,HOXB13,rs138213197,C,T,False,True,standard,,ClinVar,
+TP53_R337H,cancer_inherited,TP53 R337H,TP53,rs121912664,C,T,False,True,standard,,ClinVar,
+TREM2_R47H,alzheimers,TREM2 R47H,TREM2,rs75932628,C,T,False,True,standard,,"ClinVar, AlzGene",
+LRRK2_G2019S,parkinsons,LRRK2 G2019S,LRRK2,rs34637584,G,A,False,True,standard,,"ClinVar, GWAS Catalog",
+GBA_N370S,parkinsons,GBA N370S,GBA,rs76763715,T,C,False,True,inferred,Strand verified against dbSNP; not on the AncestryDNA chip. Awaiting expert review.,"ClinVar, GWAS Catalog",
+SNCA_RS356219,parkinsons,SNCA,SNCA,rs356219,A,G,False,True,standard,,"ClinVar, GWAS Catalog",Small effect.
+CFTR_G542X,carrier,CFTR G542X,CFTR,rs113993959,G,T,False,True,standard,,"ClinVar, CFTR2",Many other CFTR variants exist; a carrier panel is needed if planning children.
+CFTR_G551D,carrier,CFTR G551D,CFTR,rs75527207,G,A,False,True,standard,,"ClinVar, CFTR2",Many other CFTR variants exist; a carrier panel is needed if planning children.
+CFTR_W1282X,carrier,CFTR W1282X,CFTR,rs77010898,G,A,False,True,standard,,"ClinVar, CFTR2",Many other CFTR variants exist; a carrier panel is needed if planning children.
+CFTR_R117H,carrier,CFTR R117H,CFTR,rs78655421,G,A,False,True,standard,,"ClinVar, CFTR2",Many other CFTR variants exist; a carrier panel is needed if planning children.
+CFTR_F508DEL,carrier,CFTR F508del,CFTR,rs113993960,I,D,False,True,inferred,D/I notation: normal = II assumed.,"ClinVar, CFTR2",Many other CFTR variants exist; a carrier panel is needed if planning children.
+GJB2_35DELG,carrier,GJB2 35delG,GJB2,rs80338939,I,D,False,True,inferred,D/I notation: normal = II assumed.,"ClinVar, CFTR2",
+HBB_HBC,carrier,Hemoglobin C (HBB),HBB,rs33930165,C,T,False,True,standard,,"ClinVar, CFTR2",
+HBB_SICKLE,carrier,Sickle cell (HBB),HBB,rs334,T,A,True,True,inferred,Strand verified against dbSNP; not on the AncestryDNA chip. Awaiting expert review.,"ClinVar, CFTR2",
+G6PD_A_MINUS,other,G6PD deficiency (A-),G6PD,rs1050828,C,T,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",X-linked: males have one copy; a single variant letter in a male indicates the variant.
+SERPINA1_Z,other,Alpha-1 antitrypsin Z,SERPINA1,rs28929474,C,T,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+SERPINA1_S,other,Alpha-1 antitrypsin S,SERPINA1,rs17580,T,A,True,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+NOD2_G908R,other,NOD2 (Crohn's disease),NOD2,rs2066845,G,C,True,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+CFH_Y402H,other,"Macular degeneration, CFH Y402H",CFH,rs1061170,T,C,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+ARMS2_A69S,other,"Macular degeneration, ARMS2",ARMS2,rs10490924,G,T,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+CELIAC_DQ25,other,"Celiac disease, HLA-DQ2.5 marker",HLA-DQA1/DQB1,rs2187668,C,T,False,False,inferred,Tag-SNP accuracy varies by ancestry.,"ClinVar, GWAS Catalog, PharmGKB",Tag marker; not a diagnosis.
+CELIAC_DQ8,other,"Celiac disease, HLA-DQ8 marker",HLA-DQ,rs7454108,T,C,False,False,inferred,Tag-SNP accuracy varies by ancestry.,"ClinVar, GWAS Catalog, PharmGKB",Tag marker; not a diagnosis.
+GOUT_ABCG2,other,"Gout, ABCG2",ABCG2,rs2231142,G,T,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+NICOTINE_CHRNA5,other,"Nicotine dependence, CHRNA5",CHRNA5,rs16969968,G,A,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+RLS_BTBD9,other,"Restless legs, BTBD9",BTBD9,rs3923809,G,A,False,False,inferred,Risk-allele direction from published studies. Awaiting expert review.,"ClinVar, GWAS Catalog, PharmGKB",Small effect.
+VITD_GC,other,"Vitamin D, GC",GC,rs2282679,T,G,False,False,inferred,Strand verified against dbSNP; effect direction from published studies. Awaiting expert review.,"ClinVar, GWAS Catalog, PharmGKB",Small effect.
+LONGEVITY_FOXO3,other,"Longevity, FOXO3",FOXO3,rs2802292,T,G,False,False,inferred,Effect direction from published studies. Awaiting expert review.,"ClinVar, GWAS Catalog, PharmGKB",Very small effect.
+DUFFY_FYAFYB,blood,Duffy Fya/Fyb,ACKR1,rs12075,A,G,False,False,inferred,Allele-to-antigen mapping awaiting expert review.,"dbSNP, ISBT blood group tables",Curiosity-level; transfusion matching uses lab typing.
+ALDH2_E504K,other,"Alcohol flush, ALDH2",ALDH2,rs671,G,A,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",Most common in people of East Asian ancestry.
+ADH1B_R48H,other,"Alcohol metabolism, ADH1B",ADH1B,rs1229984,C,T,False,False,inferred,Effect direction from published studies. Awaiting expert review.,"ClinVar, GWAS Catalog, PharmGKB",Mostly relevant in people of East Asian ancestry.
+LCT_LACTASE,other,"Lactose digestion, LCT/MCM6",MCM6,rs4988235,G,A,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB","Other lactase-persistence versions are read in ""Lactose digestion, all versions together""."
+VKORC1_WARFARIN,drug,VKORC1 (warfarin sensitivity),VKORC1,rs9923231,C,T,False,False,inferred,Strand verified against dbSNP; not on the AncestryDNA chip. Awaiting expert review.,"PharmGKB, CPIC guidelines",
+DPYD_2846,drug,DPYD c.2846A>T (chemotherapy sensitivity),DPYD,rs67376798,T,A,True,False,standard,,"PharmGKB, CPIC guidelines",Other DPYD variants are not covered.
+DPYD_HAPB3,drug,DPYD HapB3 (chemotherapy sensitivity),DPYD,rs56038477,C,T,False,False,standard,,"PharmGKB, CPIC guidelines","This marker (c.1236G>A) stands in for the HapB3 group of changes, which almost always travel together."
+UGT1A1_6,other,UGT1A1*6 (bilirubin and some drugs),UGT1A1,rs4148323,G,A,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+CYP2D6_10,drug,CYP2D6 100C>T (part of *10 and *4),CYP2D6,rs1065852,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",Read together with *4 in the CYP2D6 type line.
+CYP2D6_17,drug,CYP2D6*17,CYP2D6,rs28371706,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2D6_41,drug,CYP2D6*41,CYP2D6,rs28371725,C,T,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2C9_5,drug,CYP2C9*5,CYP2C9,rs28371686,C,G,True,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2C9_8,drug,CYP2C9*8,CYP2C9,rs7900194,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2C9_11,drug,CYP2C9*11,CYP2C9,rs28371685,C,T,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2C19_4,drug,CYP2C19*4,CYP2C19,rs28399504,A,G,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2C19_8,drug,CYP2C19*8,CYP2C19,rs41291556,T,C,False,False,standard,,"PharmGKB, CPIC guidelines",
+WARFARIN_RS12777823,drug,"Warfarin dose, CYP2C region (rs12777823)",CYP2C cluster,rs12777823,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP2B6_18,drug,CYP2B6*18 (efavirenz),CYP2B6,rs28399499,T,C,False,False,standard,,"PharmGKB, CPIC guidelines",
+CYP3A4_22,drug,CYP3A4*22,CYP3A4,rs35599367,G,A,False,False,standard,,"PharmGKB, CPIC guidelines",Evidence for dosing changes is limited.
+CYP3A5_6,drug,CYP3A5*6,CYP3A5,rs10264272,C,T,False,False,standard,,"PharmGKB, CPIC guidelines",
+BCHE_ATYPICAL,drug,BCHE atypical (anesthesia muscle relaxants),BCHE,rs1799807,T,C,False,False,standard,,"PharmGKB, CPIC guidelines",Other BCHE variants are not covered.
+G6PD_MED,other,G6PD deficiency (Mediterranean),G6PD,rs5030868,G,A,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",X-linked: males have one copy; a single variant letter in a male indicates the variant.
+TTR_V122I,heart,TTR V122I (heart amyloidosis),TTR,rs76992529,G,A,False,False,standard,,"GWAS Catalog, ClinVar","In people without African ancestry this variant is very rare, so a positive result is more likely a chip error. Confirm with a clinical test."
+PNPLA3_I148M,other,"Fatty liver, PNPLA3 I148M",PNPLA3,rs738409,C,G,True,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+TM6SF2_E167K,other,"Fatty liver, TM6SF2 E167K",TM6SF2,rs58542926,C,T,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+HBB_HBE,carrier,Hemoglobin E (HBB),HBB,rs33950507,C,T,False,True,standard,,"ClinVar, CFTR2",Most common in people of Southeast Asian ancestry. Beta-thalassemia variants are not covered.
+MEFV_V726A,carrier,MEFV V726A,MEFV,rs28940579,A,G,False,True,standard,,"ClinVar, CFTR2","Most common in people with Ashkenazi Jewish, Armenian, Arab or other Mediterranean ancestry."
+G6PC_R83C,carrier,G6PC R83C,G6PC,rs1801175,C,T,False,True,standard,,"ClinVar, CFTR2",Most common in people of Ashkenazi Jewish ancestry. Other G6PC variants are not covered.
+KEL_K,blood,Kell blood group (K/k),KEL,rs8176058,G,A,False,False,standard,,"dbSNP, ISBT blood group tables",Transfusion matching uses lab typing.
+KIDD_JK,blood,Kidd blood group (Jka/Jkb),SLC14A1,rs1058396,G,A,False,False,standard,,"dbSNP, ISBT blood group tables",Transfusion matching uses lab typing. Rare Kidd-null types are not covered.
+LCT_13915,other,"Lactose digestion, -13915G (Middle East)",MCM6,rs41380347,A,C,False,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+LCT_14010,other,"Lactose digestion, -14010C (East Africa)",MCM6,rs145946881,C,G,True,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+LCT_13907,other,"Lactose digestion, -13907G (East Africa)",MCM6,rs41525747,G,C,True,False,standard,,"ClinVar, GWAS Catalog, PharmGKB",
+EYE_HERC2,trait_looks,Eye color,HERC2/OCA2,rs12913832,A,G,False,False,standard,,"GWAS Catalog, dbSNP","This is the strongest single eye-color marker, but other genes add shades, so it is right most of the time, not always."
+EYE_OCA2_R419Q,trait_looks,Green or hazel eyes (OCA2),OCA2,rs1800407,C,T,False,False,standard,Effect per Branicki 2009 / HIrisPlex.,"GWAS Catalog, dbSNP",A modifier: the main eye-color marker above matters more.
+RED_MC1R_R151C,trait_looks,Red hair and freckles (marker 1),MC1R,rs1805007,C,T,False,False,standard,,"GWAS Catalog, dbSNP",There are several red-hair versions of this gene; their effects add up. Marker 2 below checks another one.
+RED_MC1R_R160W,trait_looks,Red hair and freckles (marker 2),MC1R,rs1805008,C,T,False,False,standard,,"GWAS Catalog, dbSNP","Use plenty of sun protection if you burn easily, whatever your result."
+FRECKLES_IRF4,trait_looks,Freckles and sun sensitivity,IRF4,rs12203592,C,T,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Mostly seen in people with European ancestry.
+BLOND_KITLG,trait_looks,Blond hair,KITLG,rs12821256,T,C,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Hair color depends on many genes; this one has a small effect.
+EARWAX_ABCC11,trait_looks,Earwax type and body odor,ABCC11,rs17822931,C,T,False,False,standard,,"GWAS Catalog, dbSNP",
+MUSCLE_ACTN3,trait_looks,"Muscle type (""sprinter gene"")",ACTN3,rs1815739,C,T,False,False,standard,,"GWAS Catalog, dbSNP",Training matters far more than this gene. It does not decide what sport you will be good at.
+CILANTRO_OR6A2,trait_food,Cilantro tastes like soap,OR6A2,rs72921001,C,A,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",A small effect. Most people with this version still like cilantro.
+CAFFEINE_CYP1A2,trait_food,How fast you process caffeine,CYP1A2,rs762551,A,C,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP","Smoking, some medicines, and pregnancy also change how fast caffeine is cleared."
+CAFFEINE_ADORA2A,trait_food,Caffeine jitters,ADORA2A,rs5751876,C,T,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",How much coffee you are used to drinking changes this a lot.
+ANC_SLC24A5,trait_ancestry,Skin tone gene (SLC24A5),SLC24A5,rs1426654,G,A,False,False,standard,,"dbSNP, 1000 Genomes frequencies",Skin color depends on many genes. One marker cannot tell your ancestry.
+ANC_EDAR,trait_ancestry,"Thick, straight hair gene (EDAR)",EDAR,rs3827760,A,G,False,False,standard,,"dbSNP, 1000 Genomes frequencies",One marker cannot tell your ancestry.
+ANC_DUFFY_NULL,trait_ancestry,Malaria protection (Duffy-null),ACKR1,rs2814778,T,C,False,False,standard,,"dbSNP, 1000 Genomes frequencies",One marker cannot tell your ancestry.
+FUN_SUN_SNEEZE,trait_fun,Sneezing in bright sunlight,ZEB2 region,rs10427255,T,C,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",A small effect found in a large study of customers of a DNA testing company.
+FUN_CHEWING,trait_fun,Annoyed by chewing sounds,TENM2,rs2937573,A,G,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",A small effect; how you feel about it is mostly not genetic.
+FUN_NOROVIRUS,trait_fun,Stomach flu (norovirus) resistance,FUT2,rs601338,G,A,False,False,standard,,"GWAS Catalog, dbSNP",Good hand washing still matters; some strains can infect anyone.
+BRCA1_185DELAG,cancer_inherited,BRCA1 185delAG,BRCA1,rs80357914,D,I,False,True,inferred,"Vendor letters: AncestryDNA reports the usual genotype as DD, so D = normal here even though the variant is a deletion. 23andMe reports BRCA under its own IDs. Awaiting expert review.",ClinVar,"Checks only 1 of thousands of BRCA variants. If family history exists, ask about clinical testing."
+HEXA_1278INSTATC,carrier,HEXA 1278insTATC,HEXA,rs387906309,D,I,False,True,inferred,D/I: AncestryDNA reports the usual genotype as DD (D = no insertion).,"ClinVar, CFTR2","Most common in people with Ashkenazi Jewish, French-Canadian or Cajun ancestry. Other HEXA variants are not covered."
+HEXA_G269S,carrier,HEXA G269S,HEXA,rs121907954,C,T,False,True,standard,,"ClinVar, CFTR2",Other HEXA variants are not covered.
+ASPA_E285A,carrier,ASPA E285A,ASPA,rs28940279,A,C,False,True,standard,,"ClinVar, CFTR2",Most common in people with Ashkenazi Jewish ancestry. Other ASPA variants are not covered.
+ELP1_IVS20,carrier,ELP1 (IKBKAP) splice variant,ELP1,rs111033171,A,G,False,True,standard,,"ClinVar, CFTR2",Most common in people with Ashkenazi Jewish ancestry.
+ACADM_K304E,carrier,ACADM K304E,ACADM,rs77931234,A,G,False,True,standard,,"ClinVar, CFTR2",Newborn screening tests for MCAD deficiency in many countries. Other ACADM variants are not covered.
+PAH_R408W,carrier,PAH R408W,PAH,rs5030858,G,A,False,True,standard,,"ClinVar, CFTR2",Many other PAH variants exist. Newborn screening tests for PKU.
+ALDOB_A149P,carrier,ALDOB A149P,ALDOB,rs1800546,C,G,True,True,standard,,"ClinVar, CFTR2",Other ALDOB variants are not covered.
+MEFV_M694V,carrier,MEFV M694V,MEFV,rs61752717,T,C,False,True,inferred,Not on the AncestryDNA chip; 23andMe coverage unconfirmed.,"ClinVar, CFTR2","Most common in people with Armenian, Turkish, Arab, Jewish or other Mediterranean ancestry."
+UGT1A1_GILBERT,other,Gilbert syndrome (UGT1A1),UGT1A1,rs887829,C,T,False,False,inferred,Proxy (tag) for UGT1A1*28; strongest in people of European ancestry.,"ClinVar, GWAS Catalog, PharmGKB","This marker stands in for the UGT1A1*28 version, which DNA chips cannot read directly."
+HLAB27_PROXY,other,HLA-B27 (proxy marker),HLA-B,rs4349859,G,A,False,False,inferred,Proxy (tag) accuracy varies by ancestry.,"ClinVar, GWAS Catalog, PharmGKB",A proxy that works best in people of European ancestry; a blood test can confirm HLA-B27.
+IRON_TMPRSS6,other,"Iron levels, TMPRSS6",TMPRSS6,rs855791,G,A,False,False,inferred,Effect allele from published studies; needs review.,"ClinVar, GWAS Catalog, PharmGKB",Small effect.
+NUDT15_R139C,drug,NUDT15 (thiopurine sensitivity),NUDT15,rs116855232,C,T,False,False,inferred,Not on the AncestryDNA chip; 23andMe coverage unconfirmed.,"PharmGKB, CPIC guidelines",Most common in people of East Asian or Hispanic ancestry.
+CYP4F2_3,drug,CYP4F2*3 (warfarin dose),CYP4F2,rs2108622,C,T,False,False,standard,,"PharmGKB, CPIC guidelines",A small effect compared with VKORC1 and CYP2C9.
+HLAA3101_PROXY,drug,HLA-A*31:01 proxy (carbamazepine reaction),HLA-A,rs1061235,A,T,True,False,inferred,A/T marker and proxy; accuracy varies by ancestry.,"PharmGKB, CPIC guidelines",A proxy that works best in people of European ancestry.
+CYP2B6_6,drug,CYP2B6*6 (efavirenz),CYP2B6,rs3745274,G,T,False,False,standard,,"PharmGKB, CPIC guidelines",CYP2B6*6 is defined by two markers; this checks the main one.
+IFNL3_HEPC,drug,IFNL3 (hepatitis C),IFNL3/IFNL4,rs12979860,C,T,False,False,inferred,Weak current relevance; included for completeness.,"PharmGKB, CPIC guidelines",Mostly of historical interest: today's hepatitis C pills cure most people whatever this result.
+FOOD_OMEGA3_FADS1,trait_food,Omega-3 and omega-6 fats,FADS1,rs174546,C,T,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Diet affects these levels more than this gene.
+FOOD_BCMO1_A379V,trait_food,Making vitamin A from beta-carotene (marker 1),BCO1,rs7501331,C,T,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Rarely matters with a varied diet.
+FOOD_BCMO1_R267S,trait_food,Making vitamin A from beta-carotene (marker 2),BCO1,rs12934922,A,T,True,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Rarely matters with a varied diet.
+FOOD_APOA2,trait_food,Saturated fat and weight,APOA2,rs5082,A,G,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP","Weak, inconsistent evidence. Do not change your diet because of this result alone."
+LOOKS_HAIR_TCHH,trait_looks,Straight or curly hair,TCHH,rs11803731,A,T,True,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",It nudges hair toward straight but does not decide it.
+LOOKS_HAIRLOSS_20P11,trait_looks,"Hair loss with age (mostly men), marker 1",20p11 region,rs1160312,G,A,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Mostly matters for men. Many other genes and age play a part.
+LOOKS_HAIRLOSS_AR,trait_looks,"Hair loss with age (mostly men), marker 2",AR (X chromosome),rs6152,A,G,False,False,inferred,X-linked; effect allele from published studies; needs review.,"GWAS Catalog, dbSNP",Mostly matters for men.
+LOOKS_TANNING_TYR,trait_looks,Tanning ability,TYR,rs1393350,G,A,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Sun protection matters for everyone.
+RED_MC1R_D294H,trait_looks,Red hair and freckles (marker 3),MC1R,rs1805009,G,C,True,False,standard,,"GWAS Catalog, dbSNP",Red-hair versions add up across markers 1 to 4.
+RED_MC1R_I155T,trait_looks,Red hair and freckles (marker 4),MC1R,rs1110400,T,C,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Red-hair versions add up across markers 1 to 4.
+ANC_SLC45A2,trait_ancestry,Skin tone gene (SLC45A2),SLC45A2,rs16891982,C,G,True,False,inferred,C/G marker; light allele assigned from dbSNP population frequencies.,"dbSNP, 1000 Genomes frequencies",One marker cannot tell your ancestry.
+ANC_OCA2_H615R,trait_ancestry,East Asian skin tone gene (OCA2),OCA2,rs1800414,T,C,False,False,standard,,"dbSNP, 1000 Genomes frequencies",One marker cannot tell your ancestry.
+FUN_ASPARAGUS,trait_fun,Smelling asparagus in urine,OR2M7 region,rs4481887,G,A,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Almost everyone makes the smell; this is about noticing it.
+FUN_ANDROSTENONE,trait_fun,Smelling androstenone (in sweat and some pork),OR7D4,rs61729907,G,A,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",
+FUN_DEEP_SLEEP,trait_fun,Deep sleep,ADA,rs73598374,C,T,False,False,inferred,"New trait marker; effect direction from published studies, needs review.","GWAS Catalog, dbSNP",Weak evidence from small studies.
+APOE,alzheimers,APOE type (Alzheimer's and cholesterol),APOE,rs429358+rs7412,,,,True,standard,Check against ClinVar/AlzGene.,"ClinVar, AlzGene","Age, family history and lifestyle matter more than APOE alone."
+ABO,blood,ABO blood type (inferred),ABO,rs8176719+rs8176746,,,,False,inferred,D/I letters follow AncestryDNA; A-vs-B direction awaiting expert review.,"dbSNP, ISBT blood group tables","An inference from array markers, not lab blood typing, and Rh cannot be determined. Confirm with a medical record or donor card. Non-O types have slightly higher average clot risk, and type A has been linked to slightly higher stomach cancer risk in large studies; both effects are small."
+APOL1,other,APOL1 (kidney disease risk),APOL1,rs73885319+rs71785313,,,,False,inferred,"G1 checked at rs73885319 only (rs60910145 is nearly always inherited with it). G2 letters: AncestryDNA reports the usual genotype as II, so D = G2.","ClinVar, GWAS Catalog, PharmGKB",Mostly found in people with recent African ancestry.
+NAT2,drug,NAT2 (how fast you clear some drugs),NAT2,rs1801280+rs1799930,,,,False,inferred,Assumes the two slow versions sit on different copies of the gene (usual).,"PharmGKB, CPIC guidelines","Checks the two most common slow versions (NAT2*5 and *6). Others, such as *7 (common in East Asia), are not checked, so a ""fast"" result may be wrong."
+BITTER_TAS2R38,trait_food,"Bitter taste (broccoli, kale)",TAS2R38,rs713598+rs1726866+rs10246939,,,,False,inferred,Taster letters derived from the PAV/AVI haplotypes on the forward strand; needs review.,"GWAS Catalog, dbSNP",Three spots in this gene together decide taster status; they are usually inherited together.
+CF_COMBINED,carrier,"Cystic fibrosis, all variants together",CFTR,rs113993960+rs113993959+rs75527207+rs77010898+rs78655421,,,,True,inferred,Combined reading; interpretation needs expert review.,"ClinVar, CFTR2","Checks 5 of the more than 700 known disease-causing CFTR variants. Rare variants on DNA chips are sometimes false positives, so any finding should be confirmed with a clinical test."
+HBB_COMBINED,carrier,"Sickle cell, hemoglobin C and E together",HBB,rs334+rs33930165+rs33950507,,,,True,inferred,Combined reading; interpretation needs expert review.,"ClinVar, CFTR2","Other hemoglobin variants, including beta-thalassemia, are not checked."
+TAYSACHS_COMBINED,carrier,"Tay-Sachs, both variants together",HEXA,rs387906309+rs121907954,,,,True,inferred,Combined reading; interpretation needs expert review.,"ClinVar, CFTR2",Checks the 2 most common variants in people of Ashkenazi Jewish ancestry only.
+MUTYH_COMBINED,cancer_inherited,"MUTYH, both variants together",MUTYH,rs34612342+rs36053993,,,,True,inferred,Combined reading; interpretation needs expert review.,ClinVar,Checks the 2 most common MUTYH variants in people of European ancestry; others exist.
+A1AT_COMBINED,other,Alpha-1 antitrypsin type (Z and S together),SERPINA1,rs28929474+rs17580,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, GWAS Catalog, PharmGKB",Rarer deficiency variants are not checked.
+CLOT_COMBINED,clotting,Clotting variants together,F5 + F2,rs6025+rs1799963,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, dbSNP",Does not rule out other clotting causes.
+HFE_COMBINED,iron,Iron overload type (all HFE variants together),HFE,rs1800562+rs1799945+rs1800730,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, dbSNP",Rarer iron variants are not covered.
+MTHFR_COMBINED,folate,"MTHFR, both variants together",MTHFR,rs1801133+rs1801131,,,,False,inferred,Combined reading; interpretation needs expert review.,"dbSNP, GWAS Catalog",Not treated as a medical issue by itself.
+CYP2C19_TYPE,drug,CYP2C19 type (all variants together),CYP2C19,rs4244285+rs4986893+rs28399504+rs41291556+rs12248560,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines",Follows the CPIC guideline method. Rarer CYP2C19 variants are not checked.
+CYP2C9_TYPE,drug,CYP2C9 type (all variants together),CYP2C9,rs1799853+rs1057910+rs28371686+rs7900194+rs28371685,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines",Follows the CPIC activity-score method. Two different variants are assumed to be on different copies of the gene. Rarer CYP2C9 variants are not checked.
+WARFARIN_COMBINED,drug,"Warfarin sensitivity (VKORC1, CYP2C9 and CYP4F2 together)",VKORC1 + CYP2C9 + CYP4F2,rs9923231+rs1799853+rs1057910+rs2108622,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines","Doctors also adjust for age, weight, other medicines and regular blood tests (INR). CYP2C9 *5, *8 and *11 and rs12777823 are not part of the FDA table; if you carry one, see their own lines."
+THIOPURINE_COMBINED,drug,Thiopurine drugs (TPMT and NUDT15 together),TPMT + NUDT15,rs1800462+rs1800460+rs1142345+rs116855232,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines",Follows the CPIC thiopurine guideline. Rarer TPMT and NUDT15 variants are not checked.
+CELIAC_COMBINED,other,Celiac risk types together,HLA-DQ,rs2187668+rs7454108,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, GWAS Catalog, PharmGKB","Uses single tag markers for the HLA types, which work best in people of European ancestry."
+AMD_COMBINED,other,Macular degeneration genes together,CFH + ARMS2,rs1061170+rs10490924,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, GWAS Catalog, PharmGKB","Age, smoking and family history matter a lot."
+ALCOHOL_COMBINED,other,Alcohol processing (ALDH2 and ADH1B together),ALDH2 + ADH1B,rs671+rs1229984,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, GWAS Catalog, PharmGKB","Most studied in people of East Asian ancestry, where both versions are common."
+DPYD_TYPE,drug,DPYD type (all variants together),DPYD,rs3918290+rs67376798+rs56038477,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines",Follows the CPIC DPYD activity-score method. Rarer DPYD variants are not checked; many cancer centers test DPYD directly before treatment.
+CYP2D6_TYPE,drug,CYP2D6 type (all variants together),CYP2D6,rs3892097+rs1065852+rs28371706+rs28371725,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines","Follows the CPIC activity-score method. DNA chips cannot see a missing or extra copy of the whole CYP2D6 gene, which some people have, so the true type can differ. Not available from AncestryDNA files."
+CYP2B6_TYPE,drug,CYP2B6 type (both variants together),CYP2B6,rs3745274+rs28399499,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines",Follows the CPIC efavirenz guideline. Rarer CYP2B6 variants are not checked.
+CYP3A5_TYPE,drug,CYP3A5 type (both variants together),CYP3A5,rs776746+rs10264272,,,,False,inferred,Combined reading; interpretation needs expert review.,"PharmGKB, CPIC guidelines",Follows the CPIC tacrolimus guideline. CYP3A5*7 is not checked.
+UGT1A1_TYPE,other,UGT1A1 type (*28 and *6 together),UGT1A1,rs887829+rs4148323,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, GWAS Catalog, PharmGKB",Follows the CPIC atazanavir guideline; *28 is read through a stand-in marker.
+FMF_COMBINED,carrier,"Familial Mediterranean fever, both variants together",MEFV,rs61752717+rs28940579,,,,True,inferred,Combined reading; interpretation needs expert review.,"ClinVar, CFTR2",Checks 2 of the main MEFV variants; M680I and others are not checked.
+LACTASE_COMBINED,other,"Lactose digestion, all versions together",MCM6 (LCT),rs4988235+rs41380347+rs145946881+rs41525747,,,,False,inferred,Combined reading; interpretation needs expert review.,"ClinVar, GWAS Catalog, PharmGKB",Some rarer persistence versions are not checked.
+RED_HAIR_COMBINED,trait_looks,"Red hair, all 4 markers together",MC1R,rs1805007+rs1805008+rs1805009+rs1110400,,,,False,inferred,Combined reading; interpretation needs expert review.,"GWAS Catalog, dbSNP","Red hair is mostly decided by MC1R, but rarer versions and other genes also play a part."
+HAIRLOSS_COMBINED,trait_looks,"Hair loss, both genes together",AR + 20p11,rs1160312+rs6152,,,,False,inferred,Combined reading; interpretation needs expert review.,"GWAS Catalog, dbSNP","Based on Richards et al. 2008 (Nature Genetics). AR is on the X chromosome, inherited from the mother."
+CAFFEINE_COMBINED,trait_food,"Caffeine, both genes together",CYP1A2 + ADORA2A,rs762551+rs5751876,,,,False,inferred,Combined reading; interpretation needs expert review.,"GWAS Catalog, dbSNP",Habit and tolerance matter a lot.
+BCMO1_COMBINED,trait_food,"Vitamin A from beta-carotene, both markers together",BCMO1,rs7501331+rs12934922,,,,False,inferred,Combined reading; interpretation needs expert review.,"GWAS Catalog, dbSNP","Based on Leung et al. 2009, a small study of women."

@@ -1,0 +1,16 @@
+# Build output: rebuilt by build_exe.ps1 and published on the Releases page instead
+dist/
+
+# Never commit DNA files
+*.zip
+AncestryDNA*.txt
+genome_*.txt
+*raw*data*.txt
+
+# Python and editor clutter
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini

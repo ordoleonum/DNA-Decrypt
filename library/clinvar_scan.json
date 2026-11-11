@@ -1,0 +1,184 @@
+{
+"meta": {
+"source": "ClinVar GRCh37 VCF (NCBI, public data)",
+"snapshot": "2026-11-01",
+"minAlleleFrequency": 0.001,
+"homozygousRareCutoff": 0.01,
+"steps": {
+"all ClinVar records": 4616207,
+"1. classified exactly Pathogenic": 189523,
+"2. reviewed: 2+ stars": 43885,
+"3. single-letter change with one rsID, chr 1-22 or X": 22999,
+"4. not A/T or C/G": 19325,
+"5. at least 1 in 1,000 in every source, 2+ sources agree": 10,
+"6. not on the known-artifact list": 8
+},
+"kept": 8,
+"excluded": {
+"rs200962248": "NF1 splice variant reported at 0.8-1.4%, but neurofibromatosis type 1 affects about 1 in 3,000 people; the frequency points to a misread site (NF1 has many look-alike pseudogene copies).",
+"rs6445": "CYP21A2 sits next to a 98%-identical pseudogene (CYP21A1P); chips and short-read sequencing often confuse the two, so calls here are unreliable."
+}
+},
+"variants": [
+{
+"rs": "rs1800553",
+"chr": "1",
+"pos": 94473807,
+"ref": "C",
+"alt": "T",
+"gene": "ABCA4",
+"name": "ABCA4",
+"note": "One copy of a harmful variant in ABCA4, a gene for the light-sensing cells of the eye. ABCA4 conditions, such as Stargardt disease (a cause of central vision loss), are recessive: they happen only when both copies of the gene carry a harmful variant. With one copy you are a carrier and usually have no symptoms. It matters for children if a partner also carries an ABCA4 variant.",
+"conditions": [
+"Syndromic retinitis pigmentosa",
+"ABCA4-related retinopathy",
+"Autosomal recessive ABCA4-related disorders"
+],
+"stars": 3,
+"af": 0.00319,
+"afMax": 0.00505,
+"consequence": "missense variant",
+"variationId": "7888"
+},
+{
+"rs": "rs61754045",
+"chr": "1",
+"pos": 94496509,
+"ref": "C",
+"alt": "T",
+"gene": "ABCA4",
+"name": "ABCA4",
+"note": "One copy of a harmful variant in ABCA4, a gene for the light-sensing cells of the eye. ABCA4 conditions, such as Stargardt disease (a cause of central vision loss), are recessive: they happen only when both copies of the gene carry a harmful variant. With one copy you are a carrier and usually have no symptoms. It matters for children if a partner also carries an ABCA4 variant.",
+"conditions": [
+"ABCA4-related retinopathy",
+"ABCA4-related disorder",
+"Cone-rod dystrophy 3"
+],
+"stars": 3,
+"af": 0.001,
+"afMax": 0.00432,
+"consequence": "intron variant",
+"variationId": "99265"
+},
+{
+"rs": "rs62642564",
+"chr": "1",
+"pos": 94466624,
+"ref": "C",
+"alt": "T",
+"gene": "ABCA4",
+"name": "ABCA4",
+"note": "One copy of a harmful variant in ABCA4, a gene for the light-sensing cells of the eye. ABCA4 conditions, such as Stargardt disease (a cause of central vision loss), are recessive: they happen only when both copies of the gene carry a harmful variant. With one copy you are a carrier and usually have no symptoms. It matters for children if a partner also carries an ABCA4 variant.",
+"conditions": [
+"ABCA4-related retinopathy",
+"Autosomal recessive ABCA4-related disorders",
+"Macular dystrophy"
+],
+"stars": 3,
+"af": 0.00187,
+"afMax": 0.007,
+"consequence": "missense variant",
+"variationId": "99448"
+},
+{
+"rs": "rs386834236",
+"chr": "17",
+"pos": 78078341,
+"ref": "T",
+"alt": "G",
+"gene": "GAA",
+"name": "GAA c.-32-13T>G",
+"note": "One copy of the most common variant behind late-onset Pompe disease, a slowly progressing muscle condition. Pompe disease is recessive, so one copy makes you a carrier, usually with no symptoms. It matters for children if a partner is also a carrier.",
+"conditions": [
+"Glycogen storage disease due to acid maltase deficiency, late-onset",
+"Glycogen storage disease, type II",
+"GAA-related disorder"
+],
+"stars": 3,
+"af": 0.0028,
+"afMax": 0.00416,
+"consequence": "intron variant",
+"variationId": "4027"
+},
+{
+"rs": "rs35887622",
+"chr": "13",
+"pos": 20763620,
+"ref": "A",
+"alt": "G",
+"gene": "GJB2",
+"name": "GJB2 M34T",
+"note": "One copy of a mild GJB2 hearing-loss variant. GJB2 hearing loss is recessive: people with two variants typically have mild to moderate hearing loss, and some have none. With one copy you are a carrier.",
+"conditions": [
+"Monogenic hearing loss",
+"Hearing loss",
+"GJB2-related disorder"
+],
+"stars": 3,
+"af": 0.00599,
+"afMax": 0.0085,
+"consequence": "missense variant",
+"variationId": "17000"
+},
+{
+"rs": "rs72474224",
+"chr": "13",
+"pos": 20763612,
+"ref": "C",
+"alt": "T",
+"gene": "GJB2",
+"name": "GJB2 V37I",
+"note": "One copy of a mild GJB2 hearing-loss variant that is common in people of East Asian ancestry. GJB2 hearing loss is recessive: people with two variants typically have mild to moderate hearing loss, and some have none. With one copy you are a carrier.",
+"conditions": [
+"Monogenic hearing loss",
+"Palmoplantar keratoderma-deafness syndrome",
+"Knuckle pads, deafness AND leukonychia syndrome"
+],
+"stars": 3,
+"af": 0.00659,
+"afMax": 0.01538,
+"consequence": "missense variant",
+"variationId": "17023"
+},
+{
+"rs": "rs28936415",
+"chr": "16",
+"pos": 8905010,
+"ref": "G",
+"alt": "A",
+"gene": "PMM2",
+"name": "PMM2 R141H",
+"note": "One copy of the most common variant behind PMM2-CDG, a rare inherited metabolic condition that appears in early childhood. It is recessive, so one copy makes you a carrier with no symptoms. Roughly 1 in 60 to 1 in 220 people of European ancestry carry it.",
+"conditions": [
+"Muscular dystrophy",
+"Isolated cerebellar hypoplasia/agenesis",
+"Cerebellar ataxia"
+],
+"stars": 2,
+"af": 0.00359,
+"afMax": 0.0066,
+"consequence": "missense variant",
+"variationId": "7706"
+},
+{
+"rs": "rs41276738",
+"chr": "12",
+"pos": 6143978,
+"ref": "C",
+"alt": "T",
+"gene": "VWF",
+"name": "VWF R854Q",
+"note": "One copy of R854Q, the most common cause of type 2N von Willebrand disease, a mild bleeding disorder. Bleeding problems usually happen only with two copies, or together with another VWF variant; one copy usually causes none. Mention it to your doctor if you or relatives have unusual bleeding, or before surgery.",
+"conditions": [
+"von Willebrand disease type 2",
+"von Willebrand disease type 3",
+"von Willebrand disorder"
+],
+"stars": 3,
+"af": 0.0018,
+"afMax": 0.00308,
+"consequence": "missense variant",
+"variationId": "296"
+}
+]
+}

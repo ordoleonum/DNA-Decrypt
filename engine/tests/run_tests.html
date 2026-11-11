@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engine tests</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:24px;background:#fff;color:#111}pre{white-space:pre-wrap}.pass{color:#0a6b2d}.fail{color:#b00020}</style>
+</head>
+<body>
+<h1 id="status">Running tests...</h1>
+<pre id="out"></pre>
+<!-- Browser runner for run_tests.js (no Node needed). Serve the project with tools/test_server.ps1 and open
+     http://127.0.0.1:8765/engine/tests/run_tests.html   (add ?real=/real to include your raw data file) -->
+<script src="../engine.js"></script>
+<script>
+(async function () {
+  var status = document.getElementById('status'), out = document.getElementById('out'), lines = [];
+  try {
+    var get = async function (u) { var r = await fetch(u, { cache: 'no-store' }); if (!r.ok) throw new Error(u + ': HTTP ' + r.status); return r.text(); };
+    var libText = await get('../../library/markers.json');
+    var src = await get('run_tests.js');
+    var real = new URLSearchParams(location.search).get('real');
+    var realText = real ? await get(real) : null;
+    var code = 0;
+    var fs = {
+      readFileSync: function (p) { return p === '__REAL__' ? realText : libText; },
+      existsSync: function (p) { return p === '__REAL__' && realText != null; }
+    };
+    var req = function (n) { return n === 'fs' ? fs : n === 'path' ? { join: function () { return 'markers.json'; } } : window.DnaEngine; };
+    var proc = { argv: ['node', 'run_tests.js'].concat(realText != null ? ['__REAL__'] : []), exit: function (c) { code = c; } };
+    var con = { log: function () { lines.push(Array.prototype.join.call(arguments, ' ')); } };
+    new Function('require', 'process', 'console', '__dirname', src)(req, proc, con, '');
+    status.textContent = code ? 'FAILED' : 'PASSED';
+    status.className = code ? 'fail' : 'pass';
+  } catch (e) {
+    status.textContent = 'ERROR'; status.className = 'fail'; lines.push(String(e && e.stack || e));
+  }
+  out.textContent = lines.join('\n');
+  document.title = status.textContent;
+})();
+</script>
+</body>
+</html>

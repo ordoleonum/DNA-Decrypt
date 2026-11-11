@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Print harness</title></head>
+<body>
+<p id="status">Building report...</p>
+<script>
+/* Loads the app in a same-origin iframe, feeds it the file served at /real, opens every section, then copies the
+   finished report into this page (scripts removed) so a headless browser can print it to PDF and count pages.
+   Run with tools/test_server.ps1 -RealFile <file>. Local only. */
+(async function () {
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const f = document.createElement('iframe'); f.src = '/dist/DNA-Health-Report.html'; f.style.width = '1000px'; f.style.height = '800px';
+  document.body.appendChild(f); await new Promise(r => f.onload = r);
+  const w = f.contentWindow, d = w.document;
+  d.getElementById('agree').click(); d.getElementById('accept').click();
+  const blob = await (await fetch('/real')).blob();
+  const dt = new w.DataTransfer(); dt.items.add(new w.File([blob], 'sample.txt', { type: 'text/plain' }));
+  const inp = d.getElementById('fileInput'); inp.files = dt.files; inp.dispatchEvent(new w.Event('change', { bubbles: true }));
+  for (let i = 0; i < 80 && d.getElementById('confirm').disabled; i++) await sleep(100);
+  d.getElementById('confirm').click(); await sleep(500);
+  if (d.getElementById('selectAll')) d.getElementById('selectAll').click();
+  d.getElementById('showReport').click(); await sleep(300);
+  d.querySelectorAll('script').forEach(s => s.remove());
+  let styles = [...d.querySelectorAll('style')].map(s => s.outerHTML).join('');
+  /* ?preview=1 shows the print layout on screen (print styles applied, page width 7.3in). */
+  if (/preview=1/.test(location.search)) styles = styles.split('@media print{').join('@media all{') + '<style>body{width:7.3in;margin:0 auto;background:#fff}</style>';
+  document.head.insertAdjacentHTML('beforeend', styles);
+  document.body.innerHTML = d.body.innerHTML;
+  document.title = 'DONE';
+  const html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Report</title>' + styles + '</head><body>' + document.body.innerHTML + '</body></html>';
+  await fetch('/save', { method: 'POST', body: html }).catch(() => {});
+})();
+</script>
+</body></html>
