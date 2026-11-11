@@ -58,7 +58,9 @@ rare variants. A "typical" result does not rule out risk; only clinical testing 
 don't include some drug-response markers (such as CYP2D6\*4 and VKORC1), so those results can't be shown.
 
 **Does it work with 23andMe?** Yes. It has been tested with a real 23andMe file. Which markers appear depends on
-your chip version. If something looks wrong, please open an issue (without attaching your DNA file).
+your chip version. Insertion/deletion markers (such as BRCA1 185delAG and CFTR F508del) are read only from
+AncestryDNA files, because 23andMe does not document what its letters mean at those positions. If something looks
+wrong, please open an issue (without attaching your DNA file).
 
 **Is it really free?** Yes. There are no accounts, ads or paid features.
 
@@ -74,12 +76,12 @@ network traffic blocked. The page itself also has a Content-Security-Policy that
 Every push runs the engine tests and library checks automatically (`.github/workflows/tests.yml`).
 
 ## Status
-Version 0.1.3 (November 2026).
+Version 0.1.4 (November 2026).
 
 | Area | State |
 | --- | --- |
 | Marker library | 154 markers, 31 combined readings, 8-variant strict ClinVar scan |
-| Engine and tests | 42 automated tests pass (43 with a real raw-data file; checked with real AncestryDNA and 23andMe files) |
+| Engine and tests | 46 automated tests pass (47 with a real raw-data file; checked with real AncestryDNA and 23andMe files) |
 | Report | One offline HTML file; results ranked by meaningfulness, one line per marker with a plain-English explanation |
 | Windows program | `DNA-Decrypt.exe`, built and self-signed by `build_exe.ps1`, published on the Releases page |
 | AncestryDNA files | Tested with real .txt and .zip files |
@@ -186,15 +188,18 @@ general reader. Add more with `trait(...)` in `library/build_library.py`.
 ## Design decisions
 - Sensitive categories are hidden until the user opts in: inherited cancer genes, Alzheimer's, Parkinson's, carrier status, and the wider ClinVar scan.
 - Alleles are forward-strand. The engine flips non-palindromic genotypes reported on the opposite strand.
-- Insertion/deletion markers use the vendors' D/I letters.
+- Insertion/deletion markers use AncestryDNA's D/I letters, and only AncestryDNA files are read for them (see below).
 - 23andMe lists some markers under internal "i" IDs instead of rsIDs. For 23andMe files only, a single-letter marker
   missing by rsID is read from a row at the exact same GRCh37 position (`library/positions.json`), but only if every
   letter is one of the marker's two expected letters (no strand flipping) and all rows at that position agree. The
   result's note names the 23andMe ID it came from. AncestryDNA files never use position matching.
-- Insertion/deletion markers are never matched by position. 23andMe does not publish which of its D/I letters is the
-  usual one for each marker, and at least one (BRCA1 185delAG) is reported to be the reverse of AncestryDNA's. So on
-  23andMe files CHEK2 1100delC, BRCA1 185delAG, HEXA 1278insTATC, CFTR F508del and GJB2 35delG are not read, and
-  insertion/deletion results that are read by rsID carry a note to confirm them clinically.
+- Insertion/deletion (D/I) positions are read only from AncestryDNA files. 23andMe does not publish which of its D/I
+  letters is the usual one for each marker, and at least one (BRCA1 185delAG) is reported to be the reverse of
+  AncestryDNA's. So on 23andMe and other files these positions are never read, by rsID or by position: BRCA1 185delAG
+  and 5382insC, BRCA2 6174delT, CHEK2 1100delC, CFTR F508del, GJB2 35delG and HEXA 1278insTATC are listed as "not
+  read", and the combined readings that use a D/I position (cystic fibrosis, Tay-Sachs, ABO, APOL1) treat it as
+  missing. Before 0.1.4 they were read from 23andMe files by rsID with AncestryDNA's letter meanings, which could
+  report a normal BRCA1 result as two copies of the variant.
 - Markers whose strand, notation or effect direction was inferred have `verify.level = "inferred"` and are marked with
   a dagger in the report (`CONFIG.showUnverifiedFlag` in the app).
 - Not covered on purpose: Rh type, haplogroups/ancestry, Lynch/CDH1 genes, most BRCA variants (see `notCovered` in the library).

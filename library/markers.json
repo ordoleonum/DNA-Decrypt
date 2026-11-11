@@ -1,7 +1,7 @@
 {
  "meta": {
-  "libraryVersion": "0.1.3",
-  "generated": "2026-11-09",
+  "libraryVersion": "0.1.4",
+  "generated": "2026-11-10",
   "strand": "forward (GRCh37). The engine auto-flips non-palindromic genotypes reported on the opposite strand.",
   "statuses": {
    "normal": "No variant of note",
@@ -5523,7 +5523,7 @@
     "rs73885319": {
      "AA": [
       "normal",
-      "No copies of APOL1 G1. (G2 is not in your file, so it could not be checked.)"
+      "No copies of APOL1 G1. (G2 could not be read from your file, so it was not checked.)"
      ],
      "AG": [
       "common_variant",

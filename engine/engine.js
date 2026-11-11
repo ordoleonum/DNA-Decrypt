@@ -114,20 +114,24 @@
   }
   function isPal(allowed) { var s = allowed.slice().sort().join(''); return s === 'AT' || s === 'CG'; }
 
-  var INDEL_23 = '23andMe does not document its insertion/deletion letters, so confirm this result with a clinical test.';
+  /* Insertion/deletion (D/I) letters are read only from AncestryDNA files, whose D/I meaning the library follows.
+     Other companies do not document theirs (23andMe's is reported to be reversed for at least BRCA1 185delAG), so on
+     any other file these positions are never read: single markers report 'not_read', combined readings treat the
+     position as missing. */
   function isIndel(letters) { return letters.indexOf('D') >= 0 || letters.indexOf('I') >= 0; }
+  function readsIndels(parsed) { return parsed.vendor === 'AncestryDNA'; }
   function join(a, b) { return a ? (b ? a + ' ' + b : a) : (b || ''); }
   function scoreMarker(m, parsed) {
     var base = { id: m.id, kind: 'marker', category: m.category, name: m.name, gene: m.gene, rsid: m.rsid,
       caveat: m.caveat, about: m.about, verifyLevel: m.verify.level, tier: m.tier };
     var g = parsed.genotypes[m.rsid];
     if (!g) return Object.assign(base, { coverage: 'not_on_file' });
+    if (!readsIndels(parsed) && isIndel([m.alleles.normal, m.alleles.variant])) return Object.assign(base, { coverage: 'not_read' });
     if (g.noCall) return Object.assign(base, { coverage: 'no_call' });
     var r = resolve(g.alleles, [m.alleles.normal, m.alleles.variant], m.palindromic);
     if (!r) return Object.assign(base, { coverage: 'unrecognized', genotype: g.alleles.join('') });
     var e = m.genotypes[r.key];
     if (g.byPosition) base.caveat = join(base.caveat, 'Read from 23andMe marker ' + g.sourceId + ' at the same DNA position.');
-    if (parsed.vendor === '23andMe' && isIndel([m.alleles.normal, m.alleles.variant])) base.caveat = join(base.caveat, INDEL_23);
     return Object.assign(base, { coverage: 'ok', genotype: g.alleles.join(''), flipped: r.flipped, byPosition: !!g.byPosition,
       hemizygous: !!g.hemizygous, status: e.status, text: e.text });
   }
@@ -135,9 +139,10 @@
   function scoreComposite(c, parsed) {
     var base = { id: c.id, kind: 'composite', category: c.category, name: c.name, gene: c.gene,
       rsid: c.rsids.join('+'), caveat: c.caveat, about: c.about, verifyLevel: c.verify.level, tier: c.tier };
-    var keys = [], any = false, noCall = false, bad = false;
+    var keys = [], any = false, noCall = false, bad = false, skipped = false;
     c.rsids.forEach(function (rs) {
       var g = parsed.genotypes[rs];
+      if (g && !readsIndels(parsed) && isIndel(c.alleleSets[rs])) { skipped = true; keys.push(null); return; }
       if (!g) { keys.push(null); return; }
       if (g.noCall) { keys.push(null); noCall = true; return; }
       var al = c.alleleSets[rs], r = resolve(g.alleles, al, isPal(al));
@@ -145,7 +150,7 @@
       keys.push(r.key); any = true;
     });
     if (bad) return Object.assign(base, { coverage: 'unrecognized' });
-    if (!any) return Object.assign(base, { coverage: noCall ? 'no_call' : 'not_on_file' });
+    if (!any) return Object.assign(base, { coverage: skipped ? 'not_read' : (noCall ? 'no_call' : 'not_on_file') });
     /* Rules are keyed by every position's sorted genotype joined with "|" (2 or more positions).
        "<first>|*" matches whatever the other positions are; `partial` covers files that only have the first position. */
     /* Combined readings may also list rules with "?" for a position that is missing from the file,
@@ -156,8 +161,7 @@
     if (!e && !full) e = val(c.rules[keys.map(function (k) { return k || '?'; }).join('|')]);
     if (!e && keys[0] && c.partial && c.partial[c.rsids[0]]) e = c.partial[c.rsids[0]][keys[0]] || null;
     if (!e && keys[0] && !full && c.rules[keys[0] + '|*']) e = c.rules[keys[0] + '|*'];
-    if (!e) return Object.assign(base, { coverage: 'partial_unresolved' });
-    if (parsed.vendor === '23andMe' && c.rsids.some(function (rs, i) { return keys[i] && isIndel(c.alleleSets[rs]); })) base.caveat = join(base.caveat, INDEL_23);
+    if (!e) return Object.assign(base, { coverage: skipped ? 'not_read' : 'partial_unresolved' });
     return Object.assign(base, { coverage: 'ok', genotype: keys.map(function (k) { return k || '?'; }).join(' / '), status: e[0], text: e[1],
       partial: !full && c.rules[(keys[0] || '') + '|*'] === undefined });
   }
@@ -243,7 +247,7 @@
     brief.sort(function (a, b) { return TIERS.indexOf(a.tier) - TIERS.indexOf(b.tier); });
     function ids(cov) { return scored.filter(function (r) { return r.coverage === cov && (!lib.categories.find(function (c) { return c.id === r.category; }).sensitive || reveal.has(r.category)); }).map(function (r) { return r.name; }); }
     return { libraryVersion: lib.meta.libraryVersion, summary: summary, sections: sections, tiers: tiers, doctorBrief: brief,
-      coverage: { notOnFile: ids('not_on_file'), noCall: ids('no_call'), unrecognized: ids('unrecognized'), unreliable: ids('unreliable') },
+      coverage: { notOnFile: ids('not_on_file'), noCall: ids('no_call'), unrecognized: ids('unrecognized'), unreliable: ids('unreliable'), notRead: ids('not_read') },
       notCovered: lib.notCovered, scan: lib.clinvarScan ? { snapshot: lib.clinvarScan.meta.snapshot, variants: lib.clinvarScan.variants.length } : null };
   }
 

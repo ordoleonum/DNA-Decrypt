@@ -4,7 +4,7 @@
   var CONFIG = {
     appName: 'DNA Decrypt',
     company: 'DNA Decrypt',
-    version: 'v0.1.3',
+    version: 'v0.1.4',
     showUnverifiedFlag: true,   // set to false once interpretations have had expert review
     minMarkers: 5,
     minRows: 5000
@@ -225,6 +225,7 @@
     h += '<p>A result that shows no variant does not rule out risk. This report checks only a small number of markers, and consumer DNA files can contain errors. Anything that matters for your health should be confirmed with a clinical test ordered by a health provider.</p>';
     if (anyFlag) h += '<p>\u2020 The interpretation of this marker is still being reviewed.</p>';
     if (rep.coverage.notOnFile.length) h += '<details class="noprint"><summary>' + rep.coverage.notOnFile.length + ' markers were not in your file</summary><p class="fine">' + esc(rep.coverage.notOnFile.join('; ')) + '</p></details>';
+    if (rep.coverage.notRead.length) h += '<details class="noprint"><summary>' + rep.coverage.notRead.length + ' insertion/deletion markers were not read</summary><p class="fine">Only AncestryDNA files document what the D and I letters at these positions mean, so they are not read from other files: ' + esc(rep.coverage.notRead.join('; ')) + '</p></details>';
     h += '<details class="noprint"><summary>What this report does not cover</summary><ul>' + rep.notCovered.map(function (n) { return '<li>' + esc(n.item) + ': ' + esc(n.reason) + '</li>'; }).join('') + '</ul></details>';
     h += '<p class="fine"><button class="linkbtn noprint" data-act="restart">Start over and erase this report from this window</button></p></div>';
     h += '<div class="printfoot">For informational purposes only. Not medical advice. Discuss these results with your doctor. ' + esc(CONFIG.appName) + ' ' + esc(CONFIG.version) + '</div>';

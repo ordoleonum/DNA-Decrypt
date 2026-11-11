@@ -419,7 +419,7 @@ def apol1(n):
 COMPOSITES.append(dict(id='APOL1',category='other',name='APOL1 (kidney disease risk)',gene='APOL1',rsids=['rs73885319','rs71785313'],
   alleleSets={'rs73885319':['A','G'],'rs71785313':['I','D']},
   rules=count_rules([('A','G'),('I','D')],apol1),
-  partial={'rs73885319':{'AA':(N,'No copies of APOL1 G1. (G2 is not in your file, so it could not be checked.)'),
+  partial={'rs73885319':{'AA':(N,'No copies of APOL1 G1. (G2 could not be read from your file, so it was not checked.)'),
                          'AG':(C,'One copy of APOL1 G1. G2 could not be checked; if you also carry G2, kidney risk is higher. A clinical test can tell.'),
                          'GG':apol1(2)}},
   caveat='Mostly found in people with recent African ancestry.',
@@ -801,7 +801,7 @@ NOT_COVERED=[dict(item='Rh (positive/negative)',reason='Cannot be determined rel
  dict(item='Maternal/paternal haplogroups and ancestry percentages',reason='Need a large reference panel. The "Ancestry clues" section shows a few single markers only.'),
  dict(item='Lynch syndrome genes (MLH1, MSH2, MSH6, PMS2), CDH1, most BRCA variants',reason='Arrays cover only a handful of these; a clinical panel is needed.')]
 
-META=dict(libraryVersion='0.1.3',generated=datetime.date.today().isoformat(),
+META=dict(libraryVersion='0.1.4',generated=datetime.date.today().isoformat(),
  strand='forward (GRCh37). The engine auto-flips non-palindromic genotypes reported on the opposite strand.',
  statuses=dict(normal='No variant of note',lower_risk='Lower-end genetic risk',common_variant='Common variant, small effect',notable='Worth discussing with a doctor',info='Informational'),
  noCalls=['--','00','0','0/0','-','II_missing'],
